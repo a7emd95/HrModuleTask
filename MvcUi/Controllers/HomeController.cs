@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MvcUi.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using UI.Models;
 
-namespace UI.Controllers
+namespace MvcUi.Controllers
 {
     public class HomeController : Controller
     {

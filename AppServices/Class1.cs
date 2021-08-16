@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Services
+namespace AppServices
 {
     public class Class1
     {
-        
     }
 }
