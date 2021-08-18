@@ -16,7 +16,7 @@ namespace Core.Validitors
                 .NotEmpty().WithMessage("Title Shouldn't Be Empty")
                 .NotNull()
                 .MinimumLength(2).WithMessage("Title Should Be More Than 2 Characters")
-                .MaximumLength(100).WithMessage("Title Should Be Less Than 100 Characters");
+                .MaximumLength(100).WithMessage("Title Should Be Less Than 100 Characters");        
         }
     }
 }

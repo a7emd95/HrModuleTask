@@ -23,5 +23,7 @@ namespace Core.Interfaces.Base
 
         void Delete(T entity);
         void Delete(int entityId);
+
+       bool GetAny(Expression<Func<T, bool>> filter = null);
     }
 }

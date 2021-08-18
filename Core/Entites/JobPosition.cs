@@ -13,5 +13,8 @@ namespace Core.Entites
         public Guid PublicID { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual ICollection<CandidatePosition> CandidatePositions { get; set; }
+        public virtual ICollection<PositionQuestion> PositionQuestions { get; set; }
     }
 }

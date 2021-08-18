@@ -10,12 +10,15 @@ namespace Core.Interfaces.AppServices
     public interface IJobPostionAppService : IDisposable
     {
         List<GetJobPositionModel> GetAllJobPositions();
+        List<GetJobPositionModel> GetAllActiveJobPosition();
         GetJobPositionModel GetJobPosition(int JobPositionId);
 
         GetJobPositionModel CreateNewJobPosition(CreateJobPositionModel jobPositionModel);
         bool UpdateJobPosition(UpdateJobPositionModel jobPositionModel);
 
         bool DeleteJobPosition(int jobPositionId);
+
+        void AddCandidateToPosition(int candidateId , int jobPositionId);
 
 
 

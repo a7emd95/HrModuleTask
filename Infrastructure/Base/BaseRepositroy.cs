@@ -12,8 +12,8 @@ namespace Infrastructure.Base
 {
     public class BaseRepositroy<T> : IRepositroy<T> where T : class
     {
-        private readonly DbContext _dbContext;
-        private readonly DbSet<T> _dbSet;
+        protected readonly DbContext _dbContext;
+        protected readonly DbSet<T> _dbSet;
 
         public BaseRepositroy(DbContext context)
         {
@@ -116,6 +116,17 @@ namespace Infrastructure.Base
             pageNumber = (pageNumber < 0) ? 1 : pageNumber;
             pageSize = (pageSize > 12 || pageSize < 0) ? 12 : pageSize;
             return _dbSet.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+        }
+
+        public bool GetAny(Expression<Func<T, bool>> filter = null)
+        {
+            IQueryable<T> query = _dbSet;
+            bool result = false;
+            if (filter != null)
+            {
+                result = query.Any(filter);
+            }
+            return result;
         }
     }
 }

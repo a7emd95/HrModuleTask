@@ -11,5 +11,7 @@ namespace Core.Interfaces.Base
     {
         int SaveChanges();
         IJobPositionRepositroy JobPositionRepositroy { get; }
+        ICandidateRepositroy CandidateRepositroy { get; }
+        ICandidatePositionRepositroy CandidatePositionRepositroy { get; }
     }
 }

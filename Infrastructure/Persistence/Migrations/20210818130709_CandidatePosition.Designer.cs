@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210818130709_CandidatePosition")]
+    partial class CandidatePosition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,75 +90,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("JobPostion");
-                });
-
-            modelBuilder.Entity("Core.Entites.PositionQuestion", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("JobPositionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("JobPositionId");
-
-                    b.HasIndex("OuestionId");
-
-                    b.ToTable("PositionQuestion");
-                });
-
-            modelBuilder.Entity("Core.Entites.Question", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<Guid>("PublicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.Property<string>("QuestionBodyText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionTypeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("QuestionTypeId");
-
-                    b.ToTable("Question");
-                });
-
-            modelBuilder.Entity("Core.Entites.QuestionType", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("publicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("QuestionType");
                 });
 
             modelBuilder.Entity("Infrastructure.Persistence.Identity.ApplicationUser", b =>
@@ -374,36 +307,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("JobPosition");
                 });
 
-            modelBuilder.Entity("Core.Entites.PositionQuestion", b =>
-                {
-                    b.HasOne("Core.Entites.JobPosition", "JobPosition")
-                        .WithMany("PositionQuestions")
-                        .HasForeignKey("JobPositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entites.Question", "Question")
-                        .WithMany("PositionQuestions")
-                        .HasForeignKey("OuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("JobPosition");
-
-                    b.Navigation("Question");
-                });
-
-            modelBuilder.Entity("Core.Entites.Question", b =>
-                {
-                    b.HasOne("Core.Entites.QuestionType", "QuestionType")
-                        .WithMany("Questions")
-                        .HasForeignKey("QuestionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("QuestionType");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -463,18 +366,6 @@ namespace Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Core.Entites.JobPosition", b =>
                 {
                     b.Navigation("CandidatePositions");
-
-                    b.Navigation("PositionQuestions");
-                });
-
-            modelBuilder.Entity("Core.Entites.Question", b =>
-                {
-                    b.Navigation("PositionQuestions");
-                });
-
-            modelBuilder.Entity("Core.Entites.QuestionType", b =>
-                {
-                    b.Navigation("Questions");
                 });
 #pragma warning restore 612, 618
         }

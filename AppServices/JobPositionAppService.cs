@@ -22,29 +22,35 @@ namespace AppServices
             _mapper = mapper;
         }
 
-        public void Dispose(){
+        public void Dispose()
+        {
             _unitOfWork.Dispose();
         }
 
-        public List<GetJobPositionModel> GetAllJobPositions(){
+        public List<GetJobPositionModel> GetAllJobPositions()
+        {
             return _mapper.Map<List<GetJobPositionModel>>(_unitOfWork.JobPositionRepositroy.GetAll());
         }
 
-        public GetJobPositionModel GetJobPosition(int JobPositionId){
+        public GetJobPositionModel GetJobPosition(int JobPositionId)
+        {
             return _mapper.Map<GetJobPositionModel>(_unitOfWork.JobPositionRepositroy.GetById(JobPositionId));
         }
 
-        public GetJobPositionModel CreateNewJobPosition(CreateJobPositionModel jobPositionModel){
+        public GetJobPositionModel CreateNewJobPosition(CreateJobPositionModel jobPositionModel)
+        {
             var newJobPosition = _mapper.Map<JobPosition>(jobPositionModel);
             var insertedJobPosition = _unitOfWork.JobPositionRepositroy.Insert(newJobPosition);
-        
+
             if (_unitOfWork.SaveChanges() > new int())
                 return _mapper.Map<GetJobPositionModel>(insertedJobPosition);
             return null;
         }
 
-        public bool UpdateJobPosition(UpdateJobPositionModel jobPositionModel){
-             var jobPosition = _mapper.Map<JobPosition>(jobPositionModel);
+        
+        public bool UpdateJobPosition(UpdateJobPositionModel jobPositionModel)
+        {
+            var jobPosition = _mapper.Map<JobPosition>(jobPositionModel);
             _unitOfWork.JobPositionRepositroy.Update(jobPosition);
 
             if (_unitOfWork.SaveChanges() > new int())
@@ -52,12 +58,28 @@ namespace AppServices
             return false;
         }
 
-        public bool DeleteJobPosition(int jobPositionId){
+        public bool DeleteJobPosition(int jobPositionId)
+        {
             _unitOfWork.JobPositionRepositroy.Delete(jobPositionId);
 
             if (_unitOfWork.SaveChanges() > new int())
                 return true;
             return false;
+        }
+
+        public List<GetJobPositionModel> GetAllActiveJobPosition()
+        {
+            return _mapper.Map<List<GetJobPositionModel>>(_unitOfWork.JobPositionRepositroy.GetWhere(jp => jp.IsActive == true));
+        }
+
+        public void AddCandidateToPosition(int candidateId, int jobPositionId)
+        {
+            var candidatePosition = new CandidatePosition()
+            { CandidateId = candidateId, JobPositionId = jobPositionId, IsActive = true };
+
+            _unitOfWork.CandidatePositionRepositroy.Insert(candidatePosition);
+            _unitOfWork.SaveChanges();
+
         }
     }
 }

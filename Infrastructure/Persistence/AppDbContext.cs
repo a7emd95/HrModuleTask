@@ -25,6 +25,13 @@ namespace Infrastructure.Persistence
         }
 
 
-        public DbSet<JobPosition> JobPositions { get; set; }
+        public virtual DbSet<JobPosition> JobPositions { get; set; }
+        public virtual DbSet<Candidate> Candidates { get; set; }
+        public virtual DbSet<CandidatePosition> CandidatePositons { get; set; }
+        public virtual DbSet<Question>  Questions { get; set; }
+        public virtual DbSet<PositionQuestion> PositionQuestions { get; set; }
+        public virtual DbSet<QuestionType>  QuestionTypes{ get; set; }
+
+
     }
 }

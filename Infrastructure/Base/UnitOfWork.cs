@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Base
 {
-   public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _dbContext;
 
@@ -19,17 +19,19 @@ namespace Infrastructure.Base
             _dbContext = context;
         }
 
-        public void Dispose(){
+        public void Dispose()
+        {
             _dbContext.Dispose();
         }
 
-        public int SaveChanges(){
-           return _dbContext.SaveChanges();
+        public int SaveChanges()
+        {
+            return _dbContext.SaveChanges();
         }
 
 
         private JobPositionRepositroy jobPositionRepo;
-        public  IJobPositionRepositroy JobPositionRepositroy
+        public IJobPositionRepositroy JobPositionRepositroy
         {
             get
             {
@@ -39,8 +41,34 @@ namespace Infrastructure.Base
                 }
                 return jobPositionRepo;
             }
-     }
-    
+        }
+
+        private CandidateRepositroy candidateRepo;
+        public ICandidateRepositroy CandidateRepositroy
+        {
+            get
+            {
+                if (candidateRepo == null)
+                {
+                    candidateRepo = new CandidateRepositroy(_dbContext);
+                }
+                return candidateRepo;
+            }
+        }
+
+        private CandidatePositionRepositroy candidatePositionRepo;
+        public ICandidatePositionRepositroy CandidatePositionRepositroy
+        {
+            get
+            {
+                if (candidatePositionRepo == null)
+                {
+                    candidatePositionRepo = new CandidatePositionRepositroy(_dbContext);
+                }
+                return candidatePositionRepo;
+            }
+        }
+
     }
 }
 
