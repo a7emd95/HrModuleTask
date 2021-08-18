@@ -1,3 +1,11 @@
+using AppServices;
+using Core.Interfaces.AppServices;
+using Core.Interfaces.Base;
+using Core.Models.JobPosition;
+using Core.Validitors;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Infrastructure.Base;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Identity;
 using Microsoft.AspNetCore.Builder;
@@ -30,10 +38,23 @@ namespace MvcUi
                 (options) => options.UseSqlServer(Configuration.GetConnectionString("cs"))
                 );
 
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            services.AddControllersWithViews();
+            //setUp Business Services
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IJobPostionAppService, JobPositionAppService>();
+            
+
+            //setUp Validitors
+            services.AddTransient<IValidator<CreateJobPositionModel>, JobPositionValiditor>();
+
+            //setUp AutoMapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+            services.AddControllersWithViews().AddFluentValidation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

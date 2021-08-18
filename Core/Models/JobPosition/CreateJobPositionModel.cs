@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entites
+namespace Core.Models.JobPosition
 {
-
-    public class JobPosition
+    public class CreateJobPositionModel
     {
-        public int ID { get; set; }
-        public Guid PublicID { get; set; }
         public string Title { get; set; }
         public bool IsActive { get; set; }
     }

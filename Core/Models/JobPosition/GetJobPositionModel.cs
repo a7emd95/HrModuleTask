@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entites
+namespace Core.Models.JobPosition
 {
-
-    public class JobPosition
+    public class GetJobPositionModel
     {
         public int ID { get; set; }
         public Guid PublicID { get; set; }
