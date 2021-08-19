@@ -11,10 +11,12 @@ namespace Core.Entites
         public int ID {get;set;} 
         public Guid PublicId { get; set; }
         public string QuestionBodyText { get; set; }
-
         public int QuestionTypeId { get; set; }
 
         public virtual ICollection<PositionQuestion> PositionQuestions { get; set; }
         public virtual QuestionType QuestionType { get; set; }
+        public virtual ICollection<QuestionAnswer> QuestionAnswers { get; set; }
+        public virtual ICollection<CandidateAnswer> CandidateAnswers { get; set; }
+        
     }
 }

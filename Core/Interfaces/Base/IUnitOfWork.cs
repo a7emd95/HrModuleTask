@@ -13,5 +13,10 @@ namespace Core.Interfaces.Base
         IJobPositionRepositroy JobPositionRepositroy { get; }
         ICandidateRepositroy CandidateRepositroy { get; }
         ICandidatePositionRepositroy CandidatePositionRepositroy { get; }
+        IQuestionRepositroy QuestionRepositroy{ get; }
+        IPositionQuestionRepository PositionQuestionRepository { get; }
+        IInterviewExamRepository  InterviewExamRepository { get; }
+        ICandidateAnswerRepository ICandidateAnswerRepository  { get; }
+        IQuestionAnswerRepository QuestionAnswerRepository { get; }
     }
 }

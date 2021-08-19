@@ -69,16 +69,16 @@ namespace AppServices
         //TODO : Make Update With Position
         public bool UpdateCandidate(UpdateCandidateModel candidateModel)
         {
-            
-             var candidate = _mapper.Map<Candidate>(candidateModel);
+
+            var candidate = _mapper.Map<Candidate>(candidateModel);
             _unitOfWork.CandidateRepositroy.Update(candidate);
 
-            if (_unitOfWork.SaveChanges() > new int()) 
+            if (_unitOfWork.SaveChanges() > new int())
             {
-               
+
                 return true;
             }
-                
+
             return false;
         }
 
@@ -89,6 +89,16 @@ namespace AppServices
             if (_unitOfWork.SaveChanges() > new int())
                 return true;
             return false;
+        }
+
+        public void AddCandidateToPosition(int candidateId, int jobPositionId)
+        {
+            var candidatePosition = new CandidatePosition()
+            { CandidateId = candidateId, JobPositionId = jobPositionId, IsActive = true };
+
+            _unitOfWork.CandidatePositionRepositroy.Insert(candidatePosition);
+            _unitOfWork.SaveChanges();
+
         }
     }
 }

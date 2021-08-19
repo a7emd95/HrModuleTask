@@ -4,14 +4,16 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210819131523_interviewExamQuestions")]
+    partial class interviewExamQuestions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,39 +42,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Candidate");
                 });
 
-            modelBuilder.Entity("Core.Entites.CandidateAnswer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AnswerBodyText")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InterviewExamId")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("IsCorrect")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("PublicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("InterviewExamId");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("CandidateAnswer");
-                });
-
             modelBuilder.Entity("Core.Entites.CandidatePosition", b =>
                 {
                     b.Property<int>("ID")
@@ -96,6 +65,28 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasIndex("JobPositionId");
 
                     b.ToTable("CandidatePosition");
+                });
+
+            modelBuilder.Entity("Core.Entites.InterViewExamQuestion", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("InterviewExamId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("InterviewExamId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("InterviewExamQuestion");
                 });
 
             modelBuilder.Entity("Core.Entites.InterviewExam", b =>
@@ -200,35 +191,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasIndex("QuestionTypeId");
 
                     b.ToTable("Question");
-                });
-
-            modelBuilder.Entity("Core.Entites.QuestionAnswer", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AnswerBodyText")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsCorrect")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("PublicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValueSql("NEWID()");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("QuestionAnswer");
                 });
 
             modelBuilder.Entity("Core.Entites.QuestionType", b =>
@@ -448,25 +410,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Core.Entites.CandidateAnswer", b =>
-                {
-                    b.HasOne("Core.Entites.InterviewExam", "InterviewExam")
-                        .WithMany("CandidateAnswers")
-                        .HasForeignKey("InterviewExamId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Core.Entites.Question", "Question")
-                        .WithMany("CandidateAnswers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("InterviewExam");
-
-                    b.Navigation("Question");
-                });
-
             modelBuilder.Entity("Core.Entites.CandidatePosition", b =>
                 {
                     b.HasOne("Core.Entites.Candidate", "Candidate")
@@ -484,6 +427,25 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Candidate");
 
                     b.Navigation("JobPosition");
+                });
+
+            modelBuilder.Entity("Core.Entites.InterViewExamQuestion", b =>
+                {
+                    b.HasOne("Core.Entites.InterviewExam", "InterviewExam")
+                        .WithMany("InterViewExamQuestions")
+                        .HasForeignKey("InterviewExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entites.Question", "Question")
+                        .WithMany("InterViewExamQuestions")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("InterviewExam");
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Core.Entites.InterviewExam", b =>
@@ -525,17 +487,6 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("QuestionType");
-                });
-
-            modelBuilder.Entity("Core.Entites.QuestionAnswer", b =>
-                {
-                    b.HasOne("Core.Entites.Question", "Question")
-                        .WithMany("QuestionAnswers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -598,7 +549,7 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Entites.InterviewExam", b =>
                 {
-                    b.Navigation("CandidateAnswers");
+                    b.Navigation("InterViewExamQuestions");
                 });
 
             modelBuilder.Entity("Core.Entites.JobPosition", b =>
@@ -610,11 +561,9 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Entites.Question", b =>
                 {
-                    b.Navigation("CandidateAnswers");
+                    b.Navigation("InterViewExamQuestions");
 
                     b.Navigation("PositionQuestions");
-
-                    b.Navigation("QuestionAnswers");
                 });
 
             modelBuilder.Entity("Core.Entites.QuestionType", b =>

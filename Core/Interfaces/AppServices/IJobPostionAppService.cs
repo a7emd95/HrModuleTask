@@ -18,9 +18,7 @@ namespace Core.Interfaces.AppServices
 
         bool DeleteJobPosition(int jobPositionId);
 
-        void AddCandidateToPosition(int candidateId , int jobPositionId);
-
-
+        bool AssignQuestionToPosition(int positionId, int questionId);
 
     }
 }

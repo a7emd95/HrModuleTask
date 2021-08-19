@@ -47,7 +47,7 @@ namespace AppServices
             return null;
         }
 
-        
+
         public bool UpdateJobPosition(UpdateJobPositionModel jobPositionModel)
         {
             var jobPosition = _mapper.Map<JobPosition>(jobPositionModel);
@@ -72,14 +72,14 @@ namespace AppServices
             return _mapper.Map<List<GetJobPositionModel>>(_unitOfWork.JobPositionRepositroy.GetWhere(jp => jp.IsActive == true));
         }
 
-        public void AddCandidateToPosition(int candidateId, int jobPositionId)
+        public bool AssignQuestionToPosition(int positionId, int questionId)
         {
-            var candidatePosition = new CandidatePosition()
-            { CandidateId = candidateId, JobPositionId = jobPositionId, IsActive = true };
+            var positionQuestion = new PositionQuestion() { JobPositionId = positionId, OuestionId = questionId };
+            _unitOfWork.PositionQuestionRepository.Insert(positionQuestion);
 
-            _unitOfWork.CandidatePositionRepositroy.Insert(candidatePosition);
-            _unitOfWork.SaveChanges();
-
+            if (_unitOfWork.SaveChanges() > new int())
+                return true;
+            return false;
         }
     }
 }

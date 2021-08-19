@@ -69,6 +69,72 @@ namespace Infrastructure.Base
             }
         }
 
+        private QuestionRepositroy questionRepo;
+        public IQuestionRepositroy QuestionRepositroy
+        {
+            get
+            {
+                if (questionRepo == null)
+                {
+                    questionRepo = new QuestionRepositroy(_dbContext);
+                }
+                return questionRepo;
+            }
+        }
+
+        private PositionQuestionRepository positionQuestionRepo;
+        public IPositionQuestionRepository PositionQuestionRepository
+        {
+            get
+            {
+                if (positionQuestionRepo == null)
+                {
+                    positionQuestionRepo = new PositionQuestionRepository(_dbContext);
+                }
+                return positionQuestionRepo;
+            }
+        }
+
+
+        private InterviewExamRepository interviewExamRepo;
+        public IInterviewExamRepository InterviewExamRepository
+        {
+            get
+            {
+                if (interviewExamRepo == null)
+                {
+                    interviewExamRepo = new InterviewExamRepository(_dbContext);
+                }
+                return interviewExamRepo;
+            }
+        }
+
+        private CandidateAnswerRepositroy candidateAnswerRepo;
+        public ICandidateAnswerRepository ICandidateAnswerRepository
+        {
+            get
+            {
+                if (candidateAnswerRepo == null)
+                {
+                    candidateAnswerRepo = new CandidateAnswerRepositroy(_dbContext);
+                }
+                return candidateAnswerRepo;
+            }
+        }
+
+        private QuestionAnswerRepository questionAnswerRepo;
+        public IQuestionAnswerRepository QuestionAnswerRepository
+        {
+            get
+            {
+                if (questionAnswerRepo == null)
+                {
+                    questionAnswerRepo = new QuestionAnswerRepository(_dbContext);
+                }
+                return questionAnswerRepo;
+            }
+        }
+
     }
 }
 

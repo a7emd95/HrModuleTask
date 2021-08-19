@@ -16,5 +16,7 @@ namespace Core.Interfaces.AppServices
         bool UpdateCandidate(UpdateCandidateModel candidateModel);
 
         bool DeleteCandidate(int candidate);
+
+        void AddCandidateToPosition(int candidateId, int jobPositionId);
     }
 }
