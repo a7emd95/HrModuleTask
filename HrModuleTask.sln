@@ -3,15 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{91E39722-4AEF-4D0B-A8B4-152AD2A6FA0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{91E39722-4AEF-4D0B-A8B4-152AD2A6FA0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{72D0E228-E079-4803-8AEC-E390CEDBDDC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{72D0E228-E079-4803-8AEC-E390CEDBDDC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcUi", "MvcUi\MvcUi.csproj", "{24E1BD41-1629-4CC7-93B9-96D2DA3FADC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcUi", "MvcUi\MvcUi.csproj", "{24E1BD41-1629-4CC7-93B9-96D2DA3FADC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestfulApi", "RestfulApi\RestfulApi.csproj", "{369D5EF2-D29E-4780-857F-E494D65E1005}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppServices", "AppServices\AppServices.csproj", "{81B8707F-3AF7-45C4-8434-BFEAD0EC61B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppServices", "AppServices\AppServices.csproj", "{81B8707F-3AF7-45C4-8434-BFEAD0EC61B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +29,6 @@ Global
 		{24E1BD41-1629-4CC7-93B9-96D2DA3FADC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24E1BD41-1629-4CC7-93B9-96D2DA3FADC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24E1BD41-1629-4CC7-93B9-96D2DA3FADC4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{369D5EF2-D29E-4780-857F-E494D65E1005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{369D5EF2-D29E-4780-857F-E494D65E1005}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{369D5EF2-D29E-4780-857F-E494D65E1005}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{369D5EF2-D29E-4780-857F-E494D65E1005}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81B8707F-3AF7-45C4-8434-BFEAD0EC61B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81B8707F-3AF7-45C4-8434-BFEAD0EC61B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81B8707F-3AF7-45C4-8434-BFEAD0EC61B7}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,7 +1,9 @@
 using AppServices;
 using Core.Interfaces.AppServices;
 using Core.Interfaces.Base;
+using Core.Models.Candidate;
 using Core.Models.JobPosition;
+using Core.Models.Question;
 using Core.Validitors;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -45,10 +47,14 @@ namespace MvcUi
             //setUp Business Services
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IJobPostionAppService, JobPositionAppService>();
-            
+            services.AddTransient<ICandidateAppService, CandidateAppService>();
+            services.AddTransient<IQuestionAppService, QuestionAppService>();
+
 
             //setUp Validitors
             services.AddTransient<IValidator<CreateJobPositionModel>, JobPositionValiditor>();
+            services.AddTransient<IValidator<CreateQuestionModel>, QuestionValiditor>();
+            services.AddTransient<IValidator<CreateCandidateModel>, CandidateValiditor>();
 
             //setUp AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

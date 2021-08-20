@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AppServices
 {
-    class CandidateAppService : ICandidateAppService
+    public class CandidateAppService : ICandidateAppService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

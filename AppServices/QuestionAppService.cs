@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AppServices
 {
-    class QuestionAppService : IQuestionAppService
+    public class QuestionAppService : IQuestionAppService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
