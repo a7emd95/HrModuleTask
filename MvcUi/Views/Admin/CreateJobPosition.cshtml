@@ -1,0 +1,30 @@
+﻿
+@model CreateJobPositionModel
+@{
+    ViewData["Title"] = "CreateJobPosition";
+}
+
+<form method="post" asp-antiforgery="true" class=" border border-light p-4">
+
+
+    <div class="mb-1">
+        <input asp-for="Title" class="form-control" placeholder="Enter Position Title">
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mt-2">
+        <input class="form-check-input" asp-for="IsActive" style="width : 15px; height : 15px">
+        <label class="form-check-label">This Position is available</label>
+    </div>
+
+    <button type="submit" class="btn btn-info btn-block mt-3" value="save">Create Job Position</button>
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
+
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+
+

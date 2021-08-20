@@ -16,9 +16,11 @@ namespace Core.Interfaces.AppServices
         GetJobPositionModel CreateNewJobPosition(CreateJobPositionModel jobPositionModel);
         bool UpdateJobPosition(UpdateJobPositionModel jobPositionModel);
 
-        bool DeleteJobPosition(int jobPositionId);
+        bool DeleteJobPosition(Guid jobPositionId);
 
         bool AssignQuestionToPosition(int positionId, int questionId);
+
+        public bool SearchByTitle(string title);
 
     }
 }

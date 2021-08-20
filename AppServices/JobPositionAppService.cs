@@ -58,9 +58,9 @@ namespace AppServices
             return false;
         }
 
-        public bool DeleteJobPosition(int jobPositionId)
+        public bool DeleteJobPosition(Guid jobPositionId)
         {
-            _unitOfWork.JobPositionRepositroy.Delete(jobPositionId);
+            _unitOfWork.JobPositionRepositroy.DeletePosition(jobPositionId);
 
             if (_unitOfWork.SaveChanges() > new int())
                 return true;
@@ -78,6 +78,13 @@ namespace AppServices
             _unitOfWork.PositionQuestionRepository.Insert(positionQuestion);
 
             if (_unitOfWork.SaveChanges() > new int())
+                return true;
+            return false;
+        }
+
+        public bool SearchByTitle(string title)
+        {
+            if (_unitOfWork.JobPositionRepositroy.GetAny(jp => jp.Title.ToLower() == title.ToLower()))
                 return true;
             return false;
         }

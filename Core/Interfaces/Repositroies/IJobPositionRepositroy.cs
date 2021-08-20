@@ -10,5 +10,7 @@ namespace Core.Interfaces.Repositroies
 {
     public interface IJobPositionRepositroy : IRepositroy<JobPosition>
     {
+        void DeletePosition(Guid publicId);
+
     }
 }

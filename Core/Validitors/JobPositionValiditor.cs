@@ -13,10 +13,10 @@ namespace Core.Validitors
         public JobPositionValiditor()
         {
             RuleFor(jb => jb.Title)
-                .NotEmpty().WithMessage("Title Shouldn't Be Empty")
+                .NotEmpty().WithMessage("Title shouldn't be empty")
                 .NotNull()
-                .MinimumLength(2).WithMessage("Title Should Be More Than 2 Characters")
-                .MaximumLength(100).WithMessage("Title Should Be Less Than 100 Characters");        
+                .MinimumLength(2).WithMessage("Title should be more than 2 characters")
+                .MaximumLength(100).WithMessage("title should be less than 100 characters");        
         }
     }
 }

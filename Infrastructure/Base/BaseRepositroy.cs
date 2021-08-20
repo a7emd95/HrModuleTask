@@ -112,6 +112,7 @@ namespace Infrastructure.Base
             Delete(entity);
         }
 
+
         public IQueryable<T> GetByPage(int pageNumber, int pageSize){
             pageNumber = (pageNumber < 0) ? 1 : pageNumber;
             pageSize = (pageSize > 12 || pageSize < 0) ? 12 : pageSize;
