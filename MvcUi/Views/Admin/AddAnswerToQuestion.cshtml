@@ -1,0 +1,39 @@
+﻿@using Core.Models.QuestionAnswer
+@model CreateQuestionAnswerModel
+@{
+    ViewData["Title"] = "AddAnswerToQuestion";
+  
+ 
+}
+
+<form method="post" asp-antiforgery="true" class="border border-light p-4">
+
+    <div class="mb-1 form-group">
+        <textarea asp-for="AnswerBodyText" class="form-control" rows="4" placeholder="Add Answer Body"> </textarea>
+
+    </div>
+
+    <div class="form-check mt-2">
+        <input class="form-check-input" asp-for="IsCorrect" style="width : 15px; height : 15px">
+        <label class="form-check-label">This Answer is correct one for this question</label>
+    </div>
+
+    <input hidden asp-for="QuestionId" value="@ViewBag.qstId" />
+    <button type="submit" class="btn btn-info btn-block mt-3" value="save">Create Answer</button>
+
+
+    @if (ViewBag.isAnswerAdded)
+    {
+        <span style="color:green">anwer is added to this question you can still add more answers</span>
+    }
+    else
+    {
+        <span style="display:none"></span>
+    }
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
+
+
+
+

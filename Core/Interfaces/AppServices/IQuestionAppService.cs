@@ -1,4 +1,5 @@
 ﻿using Core.Models.Question;
+using Core.Models.QuestionAnswer;
 using Core.Models.QuestuinType;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace Core.Interfaces.AppServices
         bool DeleteQuestion(int questionId);
 
         List<GetQuestionTypeModel> GetQuestionTypes();
+
+        GetQuestionAnswerModel AddAnswerToQuestion(CreateQuestionAnswerModel answerModel);
 
 
 

@@ -3,6 +3,7 @@ using Core.Entites;
 using Core.Interfaces.AppServices;
 using Core.Interfaces.Base;
 using Core.Models.Question;
+using Core.Models.QuestionAnswer;
 using Core.Models.QuestuinType;
 using System;
 using System.Collections.Generic;
@@ -66,9 +67,25 @@ namespace AppServices
             return false;
         }
 
+        /// <summary>
+        /// Get questions types 
+        /// </summary>
+        /// <returns>List of question type</returns>
         public List<GetQuestionTypeModel> GetQuestionTypes()
         {
             return _mapper.Map<List<GetQuestionTypeModel>>(_unitOfWork.QuestionTypeRepositroy.GetAll());
+        }
+
+        public GetQuestionAnswerModel AddAnswerToQuestion(CreateQuestionAnswerModel answerModel)
+        {
+            var answer = _mapper.Map<QuestionAnswer>(answerModel);
+            var insretedAnswer = _unitOfWork.QuestionAnswerRepository.Insert(answer);
+
+            if (_unitOfWork.SaveChanges() > new int())
+                return _mapper.Map<GetQuestionAnswerModel>(insretedAnswer);
+
+            return null;
+
         }
     }
 }

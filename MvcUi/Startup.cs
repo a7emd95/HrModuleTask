@@ -4,6 +4,7 @@ using Core.Interfaces.Base;
 using Core.Models.Candidate;
 using Core.Models.JobPosition;
 using Core.Models.Question;
+using Core.Models.QuestionAnswer;
 using Core.Validitors;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -55,6 +56,7 @@ namespace MvcUi
             services.AddTransient<IValidator<CreateJobPositionModel>, JobPositionValiditor>();
             services.AddTransient<IValidator<CreateQuestionModel>, QuestionValiditor>();
             services.AddTransient<IValidator<CreateCandidateModel>, CandidateValiditor>();
+            services.AddTransient<IValidator<CreateQuestionAnswerModel>, QuestionAnswerValiditor>();
 
             //setUp AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
