@@ -135,6 +135,19 @@ namespace Infrastructure.Base
             }
         }
 
+        private QuestionTypeRepositroy questionTypeRepo;
+        public IQuestionTypeRepositroy QuestionTypeRepositroy
+        {
+            get
+            {
+                if (questionTypeRepo == null)
+                {
+                    questionTypeRepo = new QuestionTypeRepositroy(_dbContext);
+                }
+                return questionTypeRepo;
+            }
+        }
+
     }
 }
 

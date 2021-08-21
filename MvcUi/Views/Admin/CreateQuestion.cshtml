@@ -1,0 +1,59 @@
+﻿@using Core.Models.Question
+@model CreateQuestionModel;
+@{
+    ViewData["Title"] = "CreateQuestion";
+    SelectList types = new SelectList(ViewBag.types, "ID", "Type");
+}
+
+<form method="post" asp-antiforgery="true" class="border border-light p-4">
+
+
+    <div class="mb-1 form-group">
+        <textarea asp-for="QuestionBodyText" class="form-control" rows="4"> </textarea>
+        <span class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Question Type </label>
+        <select asp-for="QuestionTypeId" asp-items="types" class="form form-control"></select>
+    </div>
+
+    <button type="submit" class="btn btn-info btn-block mt-3" value="save">Create Question</button>
+
+    @if (ViewBag.isAdded)
+    {
+        <span style="color:green">Question Added Sucess</span>
+    }
+    else
+    {
+        <span style="display:none"></span>
+    }
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
+
+@if (ViewBag.isAdded)
+{
+
+    <div class="mt-2">
+        <a class="btn btn-outline-info " value="save">Add answer</a>
+        <a class="btn btn-outline-info " value="save">Add to position</a>
+    </div> }
+else
+{
+    <div class="mt-2">
+        <button class="btn btn-outline-info " style="opacity :.2" disabled>Add answer</button>
+        <button class="btn btn-outline-info " style="opacity : .2"  disabled>Add to position</button>
+    </div>
+
+}
+
+
+
+
+@*@section Scripts {
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    }*@
+
+

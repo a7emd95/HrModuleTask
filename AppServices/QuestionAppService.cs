@@ -3,6 +3,7 @@ using Core.Entites;
 using Core.Interfaces.AppServices;
 using Core.Interfaces.Base;
 using Core.Models.Question;
+using Core.Models.QuestuinType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,6 +64,11 @@ namespace AppServices
             if (_unitOfWork.SaveChanges() > new int())
                 return true;
             return false;
+        }
+
+        public List<GetQuestionTypeModel> GetQuestionTypes()
+        {
+            return _mapper.Map<List<GetQuestionTypeModel>>(_unitOfWork.QuestionTypeRepositroy.GetAll());
         }
     }
 }

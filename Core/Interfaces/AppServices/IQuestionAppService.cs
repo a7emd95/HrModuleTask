@@ -1,4 +1,5 @@
 ﻿using Core.Models.Question;
+using Core.Models.QuestuinType;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace Core.Interfaces.AppServices
         bool UpdateQuestion(UpdateQuestionModel questionModel);
 
         bool DeleteQuestion(int questionId);
+
+        List<GetQuestionTypeModel> GetQuestionTypes();
 
 
 

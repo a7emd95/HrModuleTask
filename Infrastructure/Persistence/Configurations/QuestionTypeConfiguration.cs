@@ -21,6 +21,11 @@ namespace Infrastructure.Persistence.Configurations
 
             builder.Property(qt => qt.Type)
                 .IsRequired();
+
+            builder.HasData(new QuestionType { ID = 1 , Type = "MCQ" },
+                new QuestionType { ID = 2 , Type = "YesOrNo" },
+                new QuestionType { ID = 3 , Type = "MultiSelected" }
+                );
         }
     }
 }
