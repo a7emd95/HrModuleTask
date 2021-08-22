@@ -25,7 +25,7 @@ namespace MvcUi.Controllers
             return View();
         }
 
-       [HttpGet("admin/jobposition/create")]
+        [HttpGet("admin/jobposition/create")]
         public IActionResult CreateJobPosition()
         {
             return View();
@@ -70,110 +70,86 @@ namespace MvcUi.Controllers
             return RedirectToAction("GetAllPosition", "Admin");
         }
 
+
         [HttpGet]
         public IActionResult CreateQuestion()
         {
             ViewBag.types = _questionAppService.GetQuestionTypes();
-            ViewBag.isAdded = false;
-            ViewBag.questionId = 0;
-            return View();
-        }
-
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public IActionResult CreateQuestion(CreateQuestionModel question)
-        {
-            ViewBag.types = _questionAppService.GetQuestionTypes();
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var result = _questionAppService.CreateNewQuestion(question);
-                    if (result == null)
-                    {
-                        ModelState.AddModelError("", "Question not Created");
-                        ViewBag.isAdded = false;
-                        ViewBag.questionId = 0;
-                        return View(question);
-                    }
-                    ViewBag.isAdded = true;
-                    ViewBag.questionId = result.ID;
-                    return View();
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                    ViewBag.questionId = 0;
-                    ViewBag.isAdded = false;
-                    return View();
-                }
-
-            }
-            ViewBag.isAdded = false;
-            ViewBag.questionId = 0;
-            return View(question);
-        }
-
-        public IActionResult AddAnswerToQuestion(int? questionId)
-        {
-            ViewBag.isAnswerAdded = false;
-            if (questionId != null)
-            {
-                ViewBag.qstId = questionId;
-            }
-            else
-            {
-                ViewBag.qstId = 0;
-            }
-            return View();
-        }
-
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        public IActionResult AddAnswerToQuestion(CreateQuestionAnswerModel answer)
-        {
-            ViewBag.qstId = answer.QuestionId;
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _questionAppService.AddAnswerToQuestion(answer);
-                    ViewBag.isAnswerAdded = true;
-                    return View(new CreateQuestionAnswerModel() { AnswerBodyText = "", IsCorrect = false, QuestionId = answer.QuestionId });
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                    ViewBag.isAnswerAdded = false;
-                    return View(answer);
-
-                }
-
-            }
-            ViewBag.isAnswerAdded = false;
-            return View(answer);
-        }
-
-        //public IActionResult AssignQuestionToAnswer(int? questionId)
-        //{
-        //   
-        //    if (questionId != null)
-        //    {
-        //        ViewBag.qstId = questionId;
-        //    }
-        //    else
-        //    {
-        //        ViewBag.qstId = 0;
-        //    }
-        //    return View();
-        //}
-
-        public IActionResult AssignQuestionToPosition()
-        {
             ViewBag.positions = _jobPostionAppService.GetAllJobPositions();
-
             return View();
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public IActionResult CreateQuestion([Bind("QuestionTypeId,QuestionBodyText,Answers , PositionsId")] CreateQuestionModel questionModel)
+        {         
+            ViewBag.types = _questionAppService.GetQuestionTypes();
+            ViewBag.positions = _jobPostionAppService.GetAllJobPositions();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (questionModel.Answers.Count == 0)
+                    {
+                        ModelState.AddModelError("", "No Answers Added For Question");
+                        return View(questionModel);
+                    }
+
+                    foreach (var item in questionModel.Answers)
+                    {
+                        if (item.AnswerBodyText == null)
+                        {
+                            ModelState.AddModelError("", " Answers Is Empty");
+                            return View(questionModel);
+                        }
+                    }
+
+                    var questionType = _questionAppService.GetQuestionTypeByID(questionModel.QuestionTypeId);
+                    if (questionModel.Answers.Count > questionType.AnswersCapcity || questionModel.Answers.Count < 4)
+                    {
+                        ModelState
+                            .AddModelError("", $"this is {questionType.Type} question and be must has {questionType.AnswersCapcity} answers");
+                    }
+
+                    var newQuestion = _questionAppService.CreateNewQuestion(questionModel);
+                    foreach (var answer in questionModel.Answers)
+                    {
+                        answer.QuestionId = newQuestion.ID;
+                        _questionAppService.AddAnswerToQuestion(answer);
+                    }
+
+                    foreach (var positionId in questionModel.PositionsId)
+                    {
+                        _jobPostionAppService.AssignQuestionToPosition(positionId, newQuestion.ID);
+                    }
+
+                    return View();
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    return View(questionModel);
+                }
+            }
+            return View(questionModel);
+        }
+
+
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public ActionResult AddAnswer([Bind("Answers")] CreateQuestionModel question)
+        {
+            question.Answers.Add(new CreateQuestionAnswerModel());
+            return PartialView("CreateQuestionAnswerModel", question);
+        }
+
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        public ActionResult RemoveAnswer([Bind("Answers")] CreateQuestionModel question)
+        {
+            question.Answers.Remove(question.Answers[question.NumberOfAnswer - 1]);
+            return PartialView("CreateQuestionAnswerModel", question);
         }
     }
 }

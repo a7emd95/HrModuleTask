@@ -13,7 +13,7 @@ namespace Core.Validitors
         public QuestionAnswerValiditor()
         {
             RuleFor(qa => qa.AnswerBodyText)
-              .NotEmpty().WithMessage("Question should not empty");
+              .NotEmpty().WithMessage("Answer should not empty");
 
         }
     }

@@ -12,6 +12,8 @@ namespace Core.Entites
         public Guid publicId { get; set; }
         public string Type { get; set; }
 
+        public int AnswersCapcity { get; set; }
+
         public virtual ICollection<Question> Questions { get; set; }
 
     }

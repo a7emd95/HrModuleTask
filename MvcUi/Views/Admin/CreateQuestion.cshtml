@@ -3,52 +3,98 @@
 @{
     ViewData["Title"] = "CreateQuestion";
     SelectList types = new SelectList(ViewBag.types, "ID", "Type");
+    SelectList positionsList = new SelectList(ViewBag.positions, "ID", "Title");
 }
 
-<form method="post" asp-antiforgery="true" class="border border-light p-4">
-
-
-    <div class="mb-1 form-group">
-        <textarea asp-for="QuestionBodyText" class="form-control" rows="4" placeholder="Add Question Body"> </textarea>
-        <span class="text-danger"></span>
-    </div>
+<form method="post" asp-antiforgery="true" class="border border-light p-4" id="form">
 
     <div class="form-group">
         <label>Question Type </label>
         <select asp-for="QuestionTypeId" asp-items="types" class="form form-control"></select>
     </div>
 
-    <button type="submit" class="btn btn-info btn-block mt-3" value="save">Create Question</button>
+    <div class="form-group">
+        <label>Positions</label>
+        <select asp-for="PositionsId" asp-items="positionsList" class="selectpicker form-control" multiple data-live-search="true">
+        </select>
+    </div>
 
-    @if (ViewBag.isAdded)
-    {
-        <span style="color:green">Question Added Sucess</span>
-    }
-    else
-    {
-        <span style="display:none"></span>
-    }
+    <div class="mb-1 form-group">
+        <label asp-for="QuestionBodyText">Question Body</label>
+        <textarea asp-for="QuestionBodyText" class="form-control" rows="3" placeholder="Add Question Body"> </textarea>
+        <span asp-validation-for="QuestionBodyText" class="text-danger"></span>
+    </div>
+
+    <div id="answersContainer">
+        @Html.EditorFor(model => model.Answers)
+    </div>
+
+    <input class=" btn btn-light" type="button" id="btnAdd" value="Add Answer" />
+    <input class=" btn btn-light" type="button" id="btnRemove" value="Remove Answer" />
+
+
+    <button type="submit" class="btn btn-info btn-block mt-3">Create Question</button>
+
+    @*@if (ViewBag.isAdded)
+        {
+            <span style="color:green">Question Added Sucess</span>
+        }
+        else
+        {
+            <span style="display:none"></span>
+        }*@
 
     <div asp-validation-summary="All" class="text-danger"></div>
 </form>
 
-@if (ViewBag.isAdded)
-{
+@*@if (ViewBag.isAdded)
+    {
 
-    <div class="mt-2">
-        <a asp-action="AddAnswerToQuestion" asp-controller="Admin" asp-route-questionId="@ViewBag.questionId" class="btn btn-outline-info " value="save">Add answer</a>
-    </div>
+        <div class="mt-2">
+            <a asp-action="AddAnswerToQuestion" asp-controller="Admin" asp-route-questionId="@ViewBag.questionId" class="btn btn-outline-info " value="save">Add answer</a>
+        </div>
+    }
+    else
+    {
+        <div class="mt-2">
+            <button class="btn btn-outline-info " style="opacity :.2" disabled>Add answer</button>
+        </div>
+
+    }*@
+
+
+@section Scripts {
+    <script type="text/javascript">
+        $("#btnAdd").on('click', function () {
+            $.ajax({
+                async: true,
+                data: $('#form').serialize(),
+                type: "POST",
+                url: '/Admin/AddAnswer',
+                success: function (partialView) {
+                    console.log("partialView: " + partialView);
+                    $('#answersContainer').html(partialView);
+                }
+            });
+        });
+
+        $("#btnRemove").on('click', function () {
+            $.ajax({
+                async: true,
+                data: $('#form').serialize(),
+                type: "POST",
+                url: '/Admin/RemoveAnswer',
+                success: function (partialView) {
+                    console.log("partialView: " + partialView);
+                    $('#answersContainer').html(partialView);
+                }
+            });
+        });
+
+    </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 }
-else
-{
-    <div class="mt-2">
-        <button class="btn btn-outline-info " style="opacity :.2" disabled>Add answer</button>
-    </div>
-
-}
-
-
-
 
 
 

@@ -76,6 +76,11 @@ namespace AppServices
             return _mapper.Map<List<GetQuestionTypeModel>>(_unitOfWork.QuestionTypeRepositroy.GetAll());
         }
 
+        public GetQuestionTypeModel GetQuestionTypeByID(int id)
+        {
+            return _mapper.Map<GetQuestionTypeModel>(_unitOfWork.QuestionTypeRepositroy.GetById(id));
+        }
+
         public GetQuestionAnswerModel AddAnswerToQuestion(CreateQuestionAnswerModel answerModel)
         {
             var answer = _mapper.Map<QuestionAnswer>(answerModel);

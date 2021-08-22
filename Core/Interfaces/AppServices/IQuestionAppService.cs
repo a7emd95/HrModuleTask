@@ -24,6 +24,8 @@ namespace Core.Interfaces.AppServices
 
         GetQuestionAnswerModel AddAnswerToQuestion(CreateQuestionAnswerModel answerModel);
 
+        public GetQuestionTypeModel GetQuestionTypeByID(int id);
+
 
 
     }

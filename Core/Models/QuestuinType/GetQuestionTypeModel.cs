@@ -11,5 +11,6 @@ namespace Core.Models.QuestuinType
         public int ID { get; set; }
         public Guid publicId { get; set; }
         public string Type { get; set; }
+        public int AnswersCapcity { get; set; }
     }
 }

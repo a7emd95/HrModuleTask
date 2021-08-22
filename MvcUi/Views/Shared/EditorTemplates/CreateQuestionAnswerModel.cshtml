@@ -1,0 +1,21 @@
+﻿
+@model Core.Models.QuestionAnswer.CreateQuestionAnswerModel
+<div class="row mt-4 mb-2">
+    <div class="col-md-8">
+        <div class="mb-1 form-group">
+            <label asp-for="AnswerBodyText">Answer Body</label>
+            <textarea asp-for="AnswerBodyText" class="form-control" rows="2" placeholder="Add Answer Body"> </textarea>
+            <span asp-validation-for="AnswerBodyText"></span>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-check mt-5">
+            <input class="form-check-input" asp-for="IsCorrect" style="width : 15px; height : 15px">
+            <label class="form-check-label">Is Correct</label>
+        </div>
+    </div>
+    <div class="col-md-2 mt-2">
+        <input class=" btn btn-light" type="button" id="btnRemove" value="Remove Answer" />
+    </div>
+</div>
+
