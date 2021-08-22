@@ -1,5 +1,6 @@
 ﻿using Core.Entites;
 using Core.Interfaces.Repositroies;
+using Core.Models.Question;
 using Infrastructure.Base;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,6 +15,11 @@ namespace Infrastructure.Repositroies
     {
         public QuestionRepositroy(DbContext context) : base(context)
         {
+        }
+
+        public IQueryable<Question> GetAllQuestionWithType()
+        {
+            return _dbSet.Include(q => q.QuestionType);
         }
     }
 }

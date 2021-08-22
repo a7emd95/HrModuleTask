@@ -20,6 +20,8 @@ namespace Infrastructure.AutoMapper
                .ForMember(c => c.Positions, opt => opt.Ignore())
                .ReverseMap();
 
+            
+
             CreateMap<Candidate, CreateCandidateModel>()
                 .ForMember(c => c.PositionId, opt => opt.Ignore())
                 .ReverseMap();

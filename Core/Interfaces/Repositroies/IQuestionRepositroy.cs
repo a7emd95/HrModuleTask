@@ -1,5 +1,6 @@
 ﻿using Core.Entites;
 using Core.Interfaces.Base;
+using Core.Models.Question;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Core.Interfaces.Repositroies
 {
     public interface IQuestionRepositroy : IRepositroy<Question>
     {
+        IQueryable<Question> GetAllQuestionWithType();
     }
 }

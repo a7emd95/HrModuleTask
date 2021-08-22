@@ -1,0 +1,40 @@
+﻿@model List<Core.Models.Question.GetQuestionWithTypeModel>
+
+@{
+    ViewData["Title"] = "GetAllQuestuion";
+}
+
+<h1>Question List </h1>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Question Body</th>
+            <th scope="col">Question Type</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 1; i < Model.Count; i++)
+        {
+
+            <tr>
+                <th scope="row">@i</th>
+                <td>@Model[i].QuestionBodyText</td>
+                <td>@Model[i].QuestionType</td>
+                <td>
+                    <a asp-controller="Admin" asp-action="DeleteOuestion" asp-route-id="@Model[i].ID"
+                       type="button" class="btn btn-danger btn-sm px-3">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Admin" asp-action="CreateQuestion"
+   type="button" class="btn btn-info btn-sm px-3">
+    Create Question 
+</a>

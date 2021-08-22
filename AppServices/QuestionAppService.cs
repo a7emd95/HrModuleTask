@@ -92,5 +92,10 @@ namespace AppServices
             return null;
 
         }
+
+        public List<GetQuestionWithTypeModel> GetAllQuestionWithType()
+        {
+            return _mapper.Map<List<GetQuestionWithTypeModel>>(_unitOfWork.QuestionRepositroy.GetAllQuestionWithType());
+        }
     }
 }

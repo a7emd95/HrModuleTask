@@ -19,5 +19,10 @@ namespace Infrastructure.Repositroies
             var jopPosition = GetFristOrDefult(jp => jp.PublicID == publicId);
             Delete(jopPosition.ID);
         }
+
+        public IQueryable<JobPosition> GetAllActivePositions()
+        {
+            return _dbSet.Where(jp => jp.IsActive);
+        }
     }
 }

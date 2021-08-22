@@ -69,7 +69,7 @@ namespace AppServices
 
         public List<GetJobPositionModel> GetAllActiveJobPosition()
         {
-            return _mapper.Map<List<GetJobPositionModel>>(_unitOfWork.JobPositionRepositroy.GetWhere(jp => jp.IsActive == true));
+            return _mapper.Map<List<GetJobPositionModel>>(_unitOfWork.JobPositionRepositroy.GetAllActivePositions());
         }
 
         public bool AssignQuestionToPosition(int positionId, int questionId)

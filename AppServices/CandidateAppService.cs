@@ -31,7 +31,6 @@ namespace AppServices
         public List<GetCandidateModel> GetAllCandidate()
         {
             return _mapper.Map<List<GetCandidateModel>>(_unitOfWork.CandidateRepositroy.GetAll());
-
         }
 
         public GetCandiateWithPositionsModel GetCandidate(int candidateId)

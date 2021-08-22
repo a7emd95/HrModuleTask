@@ -16,6 +16,11 @@ namespace Infrastructure.AutoMapper
             CreateMap<Question, CreateQuestionModel>()
                 .ReverseMap();
 
+            CreateMap<Question, GetQuestionWithTypeModel>()
+                .ForMember(q => q.QuestionType, opt => opt.MapFrom(q => q.QuestionType.Type))
+                .ReverseMap();
+                
+
             CreateMap<Question, UpdateQuestionModel>()
                 .ReverseMap();
 

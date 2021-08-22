@@ -1,0 +1,40 @@
+﻿@model Core.Models.Candidate.CreateCandidateModel
+@{
+    ViewData["Title"] = "CreateCandidate";
+    SelectList positionItems = new SelectList(ViewBag.jopPositions, "ID", "Title");
+}
+
+<h1>Add Candidate</h1>
+
+<form method="post" asp-antiforgery="true" class=" border border-light p-4">
+
+
+    <div class="mb-1">
+        <label asp-for="Name"> Candidate Name </label>
+        <input asp-for="Name" class="form-control" placeholder="Enter Candidate Name">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3 mt-3">
+        <label asp-for="Email"> </label>
+        <input asp-for="Email" class="form-control" placeholder="Enter Candidate Email">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group mt-2">
+        <label>Position </label>
+        <select asp-for="PositionId" asp-items="positionItems" class="form form-control"></select>
+    </div>
+
+
+    <button type="submit" class="btn btn-info btn-block mt-3"> Add Candidate </button>
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
+
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
+

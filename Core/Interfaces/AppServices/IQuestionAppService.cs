@@ -26,6 +26,8 @@ namespace Core.Interfaces.AppServices
 
         public GetQuestionTypeModel GetQuestionTypeByID(int id);
 
+        public List<GetQuestionWithTypeModel> GetAllQuestionWithType();
+
 
 
     }

@@ -123,7 +123,7 @@ namespace MvcUi.Controllers
                         _jobPostionAppService.AssignQuestionToPosition(positionId, newQuestion.ID);
                     }
 
-                    return View();
+                    return RedirectToAction("GetAllQuestuion");
                 }
                 catch (Exception ex)
                 {
@@ -150,6 +150,19 @@ namespace MvcUi.Controllers
         {
             question.Answers.Remove(question.Answers[question.NumberOfAnswer - 1]);
             return PartialView("CreateQuestionAnswerModel", question);
+        }
+
+        public IActionResult GetAllQuestuion()
+        {
+            var questions = _questionAppService.GetAllQuestionWithType();
+            return View(questions);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteOuestion(int id)
+        {
+            _questionAppService.DeleteQuestion(id);
+            return RedirectToAction("GetAllQuestuion", "Admin");
         }
     }
 }
