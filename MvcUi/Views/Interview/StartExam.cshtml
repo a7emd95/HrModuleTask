@@ -1,102 +1,75 @@
-﻿
-@model Core.Models.InterviewExam.ExamModel
+﻿@model Core.Models.InterviewExam.ExamModel
 
 @{
-
     ViewData["Title"] = "StartExam";
 }
+
 <div class="container-fluid">
     <h1>Exam</h1>
     <hr />
-    <div class="font-weight-bold ">@Model.Candidate.Positions[0].Title</div>
-    <div class="font-weight-bold ">Candidate Name : <span class="text-info  font-italic">@Model.Candidate.Name</span></div>
+    <div class="font-weight-bold h6">@Model.Candidate.Positions[0].Title</div>
+    <div class="font-weight-bold">Candidate Name: <span class="text-info  font-italic">@Model.Candidate.Name</span></div>
     <hr />
 
     <form method="post" asp-antiforgery="true">
 
         <input asp-for="InterViewExamId" name="InterViewExamId" value="@Model.InterViewExamId" hidden />
         <input asp-for="Candidate" name="Candidate" value="@Model.Candidate" hidden />
-       @Html.EditorFor(m => m.Candidate , new { style = "display:none" })
-        @Html.EditorFor(m => m.ExamQuestions)
-   
-        @foreach (var question in Model.ExamQuestions)
+
+        @for (int i = 0; i < Model.ExamQuestions.Count; i++)
         {
-            if (question.QuestionType.ID == ViewBag.mcq)
+            if (Model.ExamQuestions[i].QuestionTypeId == ViewBag.mcq)
             {
                 <div class="form-group mb-4">
-                    <label class="form-control">@question.QuestionBodyText</label>
-                    @foreach (var anwer in question.QuestionAnswers)
-                    {
+                    @Html.HiddenFor(m => m.ExamQuestions[i].ID)
+                    @Html.DisplayFor(m => m.ExamQuestions[i].QuestionBodyText, new { @class = "h4" })
 
+                    @foreach (var answer in Model.ExamQuestions[i].QuestionAnswers)
+                    {
                         <div class="form-check ">
-                            @if (anwer.IsCorrect)
-                            {
-                                <input name="@(question.ID)" type="radio" value="@(anwer.ID)" onclick="">
-                            }
-                            <input name="@(question.ID)" type="radio" value="@(anwer.ID)">
-                            <label class="form-check-label">
-                                @anwer.AnswerBodyText
-                            </label>
+                            @Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateAnswersId, answer.ID, new { id = answer.ID })
+                            <label class="form-check-label" for="@answer.ID">@answer.AnswerBodyText</label>
                         </div>
-
                     }
                 </div>
-
             }
 
-
-            if (question.QuestionType.ID == ViewBag.yseOrNO)
+            if (Model.ExamQuestions[i].QuestionTypeId == ViewBag.yseOrNO)
             {
                 <div class="form-group mb-4">
-                    <label class="form-control">@question.QuestionBodyText</label>
-                    @foreach (var anwer in question.QuestionAnswers)
+                    @Html.HiddenFor(m => m.ExamQuestions[i].ID)
+                    @Html.DisplayFor(m => m.ExamQuestions[i].QuestionBodyText, new { @class = "h4" })
+
+                    @foreach (var answer in Model.ExamQuestions[i].QuestionAnswers)
                     {
                         <div class="form-check">
-                            <input class="form-check-input" name="@(question.ID)" type="radio" value="@(anwer.ID)">
-                            <label class="form-check-label">
-                                @anwer.AnswerBodyText
-                            </label>
+                            @Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateAnswersId, answer.ID, new { id = answer.ID })
+                            <label class="form-check-label" for="@answer.ID">@answer.AnswerBodyText</label>
                         </div>
                     }
                 </div>
-
             }
 
-
-
-            if (question.QuestionType.ID == ViewBag.multi)
+            if (Model.ExamQuestions[i].QuestionTypeId == ViewBag.multi)
             {
                 <div class="form-group mb-4">
-                    <label class="form-control">@question.QuestionBodyText</label>
-                    @foreach (var anwer in question.QuestionAnswers)
+                    @Html.HiddenFor(m => m.ExamQuestions[i].ID)
+                    @Html.DisplayFor(m => m.ExamQuestions[i].QuestionBodyText, new { @class = "h4" })
+                    @foreach (var answer in Model.ExamQuestions[i].QuestionAnswers)
                     {
                         <div class="form-check">
-                            <input class="form-check-input" value="@anwer.ID" type="checkbox" name="@(question.ID)">
-                            <label class="form-check-label">
-                                @anwer.AnswerBodyText
-                            </label>
+                            @Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateAnswersId, answer.ID, new { id = answer.ID })
+                            @*@Html.CheckBoxFor(m => m.ExamQuestions[i].CandidateAnswersId, answer.ID, new { id = answer.ID })*@
+                            <label class="form-check-label" for="@answer.ID">@answer.AnswerBodyText</label>
                         </div>
-
-
                     }
                 </div>
-
             }
-
-
         }
-
-
-
 
         <button type="submit" class="btn btn-info btn-block mt-3"> submit </button>
     </form>
 </div>
 
 @section Scripts{
-
-
-
 }
-
-

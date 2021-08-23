@@ -13,12 +13,12 @@ using System.Threading.Tasks;
 
 namespace AppServices
 {
-    public class QuestionAppService : IQuestionAppService
+    public class QuestionService : IQuestionService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public QuestionAppService(IUnitOfWork unitOfWork, IMapper mapper)
+        public QuestionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
@@ -29,15 +29,30 @@ namespace AppServices
             _unitOfWork.Dispose();
         }
 
+        /// <summary>
+        /// Get all Questions
+        /// </summary>
+        /// <returns> List of  question </returns>
         public List<GetQuestionModel> GetAllQuestions()
         {
             return _mapper.Map<List<GetQuestionModel>>(_unitOfWork.QuestionRepositroy.GetAll());
         }
 
+        /// <summary>
+        /// Get question
+        /// </summary>
+        /// <param name="questionId"></param>
+        /// <returns></returns>
         public GetQuestionModel GetQuestion(int questionId)
         {
             return _mapper.Map<GetQuestionModel>(_unitOfWork.QuestionRepositroy.GetById(questionId));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="questionModel"></param>
+        /// <returns></returns>
         public GetQuestionModel CreateNewQuestion(CreateQuestionModel questionModel)
         {
             var newQuestion = _mapper.Map<Question>(questionModel);

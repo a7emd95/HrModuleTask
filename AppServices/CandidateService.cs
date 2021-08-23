@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace AppServices
 {
-    public class CandidateAppService : ICandidateAppService
+    public class CandidateService : ICandidateService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CandidateAppService(IUnitOfWork unitOfWork, IMapper mapper)
+        public CandidateService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

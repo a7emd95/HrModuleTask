@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces.AppServices
 {
-    public interface IQuestionAppService : IDisposable
+    public interface IQuestionService : IDisposable
     {
         List<GetQuestionModel> GetAllQuestions();
 

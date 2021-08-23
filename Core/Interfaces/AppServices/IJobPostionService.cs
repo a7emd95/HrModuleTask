@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces.AppServices
 {
-    public interface IJobPostionAppService : IDisposable
+    public interface IJobPostionService : IDisposable
     {
         List<GetJobPositionModel> GetAllJobPositions();
         List<GetJobPositionModel> GetAllActiveJobPosition();

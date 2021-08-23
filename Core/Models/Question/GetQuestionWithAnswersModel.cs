@@ -17,7 +17,7 @@ namespace Core.Models.Question
         public List<GetQuestionAnswerModel> QuestionAnswers { get; set; }
         public GetQuestionTypeModel QuestionType { get; set; }
 
-        public List<int> CandidateAnswersId { get; set; }
+        public List<int> CandidateAnswersId { get; set; } //TODO : int candidateSelectedAnswer 
 
 
 

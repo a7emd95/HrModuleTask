@@ -12,10 +12,10 @@ namespace MvcUi.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IJobPostionAppService _jobPostionAppService;
-        private readonly IQuestionAppService _questionAppService;
+        private readonly IJobPostionService _jobPostionAppService;
+        private readonly IQuestionService _questionAppService;
 
-        public AdminController(IJobPostionAppService jobPostionAppService, IQuestionAppService questionAppService)
+        public AdminController(IJobPostionService jobPostionAppService, IQuestionService questionAppService)
         {
             _jobPostionAppService = jobPostionAppService;
             _questionAppService = questionAppService;
@@ -25,13 +25,15 @@ namespace MvcUi.Controllers
             return View();
         }
 
-        [HttpGet("admin/jobposition/create")]
+       
+        [Route("admin/jobposition/create")]
         public IActionResult CreateJobPosition()
         {
             return View();
         }
 
-        [HttpPost("admin/jobposition/create")]
+        [HttpPost]
+        [Route("admin/jobposition/create")]
         [AutoValidateAntiforgeryToken]
         public IActionResult CreateJobPosition(CreateJobPositionModel jobPosition)
         {
@@ -57,6 +59,7 @@ namespace MvcUi.Controllers
         }
 
         [HttpGet]
+        [Route("admin/jobposition/All")]
         public IActionResult GetAllPosition()
         {
             var positions = _jobPostionAppService.GetAllJobPositions();
@@ -64,6 +67,7 @@ namespace MvcUi.Controllers
         }
 
         [HttpGet]
+        [Route("admin/jobposition/delete")]
         public IActionResult DeletePosition(Guid id)
         {
             _jobPostionAppService.DeleteJobPosition(id);
@@ -72,6 +76,7 @@ namespace MvcUi.Controllers
 
 
         [HttpGet]
+        [Route("admin/question/create")]
         public IActionResult CreateQuestion()
         {
             ViewBag.types = _questionAppService.GetQuestionTypes();
@@ -81,6 +86,7 @@ namespace MvcUi.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
+        [Route("admin/question/create")]
         public IActionResult CreateQuestion([Bind("QuestionTypeId,QuestionBodyText,Answers , PositionsId")] CreateQuestionModel questionModel)
         {
             ViewBag.types = _questionAppService.GetQuestionTypes();
@@ -153,6 +159,7 @@ namespace MvcUi.Controllers
             return PartialView("CreateQuestionAnswerModel", question);
         }
 
+        [Route("admin/question/all")]
         public IActionResult GetAllQuestuion()
         {
             var questions = _questionAppService.GetAllQuestionWithType();
@@ -160,6 +167,7 @@ namespace MvcUi.Controllers
         }
 
         [HttpGet]
+        [Route("admin/question/delete")]
         public IActionResult DeleteOuestion(int id)
         {
             _questionAppService.DeleteQuestion(id);

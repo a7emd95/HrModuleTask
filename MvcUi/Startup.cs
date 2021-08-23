@@ -47,9 +47,9 @@ namespace MvcUi
 
             //setUp Business Services
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<IJobPostionAppService, JobPositionAppService>();
-            services.AddTransient<ICandidateAppService, CandidateAppService>();
-            services.AddTransient<IQuestionAppService, QuestionAppService>();
+            services.AddTransient<IJobPostionService, JobPositionService>();
+            services.AddTransient<ICandidateService, CandidateService>();
+            services.AddTransient<IQuestionService, QuestionService>();
 
 
             //setUp Validitors

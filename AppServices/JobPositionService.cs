@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace AppServices
 {
-    public class JobPositionAppService : IJobPostionAppService
+    public class JobPositionService : IJobPostionService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public JobPositionAppService(IUnitOfWork unitOfWork, IMapper mapper)
+        public JobPositionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces.AppServices
 {
-    public interface ICandidateAppService
+    public interface ICandidateService
     {
         List<GetCandidateModel> GetAllCandidate();
         GetCandiateWithPositionsModel GetCandidate(int candidateId);
