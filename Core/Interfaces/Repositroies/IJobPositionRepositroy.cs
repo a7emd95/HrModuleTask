@@ -11,7 +11,8 @@ namespace Core.Interfaces.Repositroies
     public interface IJobPositionRepositroy : IRepositroy<JobPosition>
     {
         void DeletePosition(Guid publicId);
-        public IQueryable<JobPosition> GetAllActivePositions();
+        IQueryable<JobPosition> GetAllActivePositions();
+        JobPosition GetJobPositionWithPositionsQuestions(int id);
 
     }
 }

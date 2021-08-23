@@ -82,7 +82,7 @@ namespace MvcUi.Controllers
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public IActionResult CreateQuestion([Bind("QuestionTypeId,QuestionBodyText,Answers , PositionsId")] CreateQuestionModel questionModel)
-        {         
+        {
             ViewBag.types = _questionAppService.GetQuestionTypes();
             ViewBag.positions = _jobPostionAppService.GetAllJobPositions();
             if (ModelState.IsValid)
@@ -99,16 +99,17 @@ namespace MvcUi.Controllers
                     {
                         if (item.AnswerBodyText == null)
                         {
-                            ModelState.AddModelError("", " Answers Is Empty");
+                            ModelState.AddModelError("", $"Answers Is Empty");
                             return View(questionModel);
                         }
                     }
 
                     var questionType = _questionAppService.GetQuestionTypeByID(questionModel.QuestionTypeId);
-                    if (questionModel.Answers.Count > questionType.AnswersCapcity || questionModel.Answers.Count < 4)
+                    if (questionModel.NumberOfAnswer > questionType.AnswersCapcity || questionModel.NumberOfAnswer < questionType.AnswersCapcity)
                     {
                         ModelState
                             .AddModelError("", $"this is {questionType.Type} question and be must has {questionType.AnswersCapcity} answers");
+                            return View(questionModel);
                     }
 
                     var newQuestion = _questionAppService.CreateNewQuestion(questionModel);
@@ -148,7 +149,7 @@ namespace MvcUi.Controllers
         [AutoValidateAntiforgeryToken]
         public ActionResult RemoveAnswer([Bind("Answers")] CreateQuestionModel question)
         {
-            question.Answers.Remove(question.Answers[question.NumberOfAnswer - 1]);
+            question.Answers.RemoveAt(0);
             return PartialView("CreateQuestionAnswerModel", question);
         }
 

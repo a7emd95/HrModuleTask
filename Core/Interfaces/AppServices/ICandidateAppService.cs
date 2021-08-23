@@ -1,4 +1,5 @@
 ﻿using Core.Models.Candidate;
+using Core.Models.InterviewExam;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace Core.Interfaces.AppServices
         bool DeleteCandidate(int candidate);
 
         void AddCandidateToPosition(int candidateId, int jobPositionId);
+        ExamModel AssignCandidateToExam(int candidateId); 
     }
 }

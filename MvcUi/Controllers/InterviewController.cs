@@ -1,5 +1,6 @@
 ﻿using Core.Interfaces.AppServices;
 using Core.Models.Candidate;
+using Core.Models.InterviewExam;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,19 @@ namespace MvcUi.Controllers
     {
         private readonly ICandidateAppService _candidateAppService;
         private readonly IJobPostionAppService _jobPostionAppService;
+        private readonly IQuestionAppService _questionAppService;
 
         public IActionResult Index()
         {
             return View();
         }
 
-        public InterviewController(ICandidateAppService candidateAppService, IJobPostionAppService jobPostionAppService)
+        public InterviewController(ICandidateAppService candidateAppService, 
+            IJobPostionAppService jobPostionAppService , IQuestionAppService questionAppService)
         {
-            this._candidateAppService = candidateAppService;
-            this._jobPostionAppService = jobPostionAppService;
+            _candidateAppService = candidateAppService;
+            _jobPostionAppService = jobPostionAppService;
+            _questionAppService = questionAppService;
         }
 
         public IActionResult CreateCandidate()
@@ -70,6 +74,33 @@ namespace MvcUi.Controllers
             _candidateAppService.DeleteCandidate(id);
             return RedirectToAction("GetAllCandidates");
         }
+
+
+
+        public IActionResult StartExam(int id)
+        {
+            ViewBag.mcq =1;
+            ViewBag.yseOrNO = 2;
+            ViewBag.multi = 3;
+            
+            var model = _candidateAppService.AssignCandidateToExam(id);
+            
+            
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult StartExam( ExamModel exam )
+        {
+           
+
+
+            ViewBag.mcq = 1;
+            ViewBag.yseOrNO = 2;
+            ViewBag.multi = 3;
+
+            return View();
+        }
+
 
     }
 }

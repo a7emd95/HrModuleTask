@@ -13,5 +13,10 @@ namespace Core.Models.Candidate
         public string Name { get; set; }
         public string Email { get; set; }
         public List<GetJobPositionModel> Positions { get; set; }
+
+        public GetCandiateWithPositionsModel()
+        {
+            Positions = new List<GetJobPositionModel>();
+        }
     }
 }

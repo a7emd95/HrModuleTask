@@ -24,5 +24,10 @@ namespace Infrastructure.Repositroies
         {
             return _dbSet.Where(jp => jp.IsActive);
         }
+
+        public JobPosition GetJobPositionWithPositionsQuestions(int id)
+        {
+            return _dbSet.Include(jp => jp.PositionQuestions).FirstOrDefault(jp => jp.ID == id);
+        }
     }
 }

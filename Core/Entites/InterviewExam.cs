@@ -14,8 +14,8 @@ namespace Core.Entites
         public int Id { get; set; }
         public Guid PublicId { get; set; }
         public DateTime CreatedDateTime { get; set; }
-        public DateTime SubmissionDateTime { get; set; }
-        public double Score { get; set; }
+        public DateTime? SubmissionDateTime { get; set; }
+        public double? Score { get; set; }
         public int CandidateId { get; set; }
 
         public virtual Candidate Candidate { get; set; }

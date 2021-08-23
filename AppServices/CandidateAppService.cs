@@ -3,7 +3,9 @@ using Core.Entites;
 using Core.Interfaces.AppServices;
 using Core.Interfaces.Base;
 using Core.Models.Candidate;
+using Core.Models.InterviewExam;
 using Core.Models.JobPosition;
+using Core.Models.Question;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,8 +42,10 @@ namespace AppServices
 
             foreach (var position in candiate.CandidatePositions)
             {
-                candiateModel.Positions.
-                    Add(_mapper.Map<GetJobPositionModel>(_unitOfWork.JobPositionRepositroy.GetById(position.JobPositionId)));
+                candiateModel.Positions
+                    .Add(_mapper.Map<GetJobPositionModel>(_unitOfWork.JobPositionRepositroy.GetById(position.JobPositionId)));
+
+
             }
             return candiateModel;
         }
@@ -99,5 +103,60 @@ namespace AppServices
             _unitOfWork.SaveChanges();
 
         }
+
+        public ExamModel AssignCandidateToExam(int candidateId)
+        {
+            var exam = new InterviewExam() { CreatedDateTime = DateTime.Now, CandidateId = candidateId };
+            var candidate = GetCandidate(candidateId);
+
+            var insertedExam = _unitOfWork.InterviewExamRepository.Insert(exam);
+
+            if (_unitOfWork.SaveChanges() > new int())
+            {
+                var questions = GenrateAllQuestionForCandidatePosition(candidateId);
+                var examQuestions = SelectQuestionsRandomlyForExam(questions);
+
+                return new ExamModel()
+                { ExamQuestions = examQuestions, Candidate = candidate, InterViewExamId = insertedExam.Id, };
+            }
+
+            return null;
+        }
+
+        private List<GetQuestionWithAnswersModel> GenrateAllQuestionForCandidatePosition(int candidateId)
+        {
+            List<Question> questions = new List<Question>();
+            var candidatePosition = _unitOfWork.CandidatePositionRepositroy.GetFristOrDefult(ca => ca.CandidateId == candidateId);
+            var positionId = candidatePosition.JobPositionId;
+            var jobposition = _unitOfWork.JobPositionRepositroy.GetJobPositionWithPositionsQuestions(positionId);
+
+            foreach (var item in jobposition.PositionQuestions)
+            {
+                questions.Add(_unitOfWork.QuestionRepositroy.GetQuestionWithAnswer(item.OuestionId));
+            }
+
+            return _mapper.Map<List<GetQuestionWithAnswersModel>>(questions);
+
+        }
+
+        private List<GetQuestionWithAnswersModel> SelectQuestionsRandomlyForExam(List<GetQuestionWithAnswersModel> allQuestions)
+        {
+            Random random = new Random();
+            List<GetQuestionWithAnswersModel> questions = new List<GetQuestionWithAnswersModel>();
+
+            int randomNumberOfQuestin = random.Next(5, 9);
+            int numberOfQuestin = (randomNumberOfQuestin > allQuestions.Count) ? allQuestions.Count : randomNumberOfQuestin;
+
+            List<int> numbers = new List<int>();
+            for (int i = 0; i < numberOfQuestin; i++)
+            {
+               
+               // questions.Add(allQuestions[random.Next(allQuestions.Count)]);
+                questions.Add(allQuestions[i]);
+            }
+
+            return questions;
+        }
+
     }
 }

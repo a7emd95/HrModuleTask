@@ -21,5 +21,10 @@ namespace Infrastructure.Repositroies
         {
             return _dbSet.Include(q => q.QuestionType);
         }
+
+        public Question GetQuestionWithAnswer(int id)
+        {
+            return _dbSet.Include(q => q.QuestionAnswers).Include(q => q.QuestionType).FirstOrDefault(q => q.ID == id);
+        }
     }
 }

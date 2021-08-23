@@ -1,0 +1,102 @@
+﻿
+@model Core.Models.InterviewExam.ExamModel
+
+@{
+
+    ViewData["Title"] = "StartExam";
+}
+<div class="container-fluid">
+    <h1>Exam</h1>
+    <hr />
+    <div class="font-weight-bold ">@Model.Candidate.Positions[0].Title</div>
+    <div class="font-weight-bold ">Candidate Name : <span class="text-info  font-italic">@Model.Candidate.Name</span></div>
+    <hr />
+
+    <form method="post" asp-antiforgery="true">
+
+        <input asp-for="InterViewExamId" name="InterViewExamId" value="@Model.InterViewExamId" hidden />
+        <input asp-for="Candidate" name="Candidate" value="@Model.Candidate" hidden />
+       @Html.EditorFor(m => m.Candidate , new { style = "display:none" })
+        @Html.EditorFor(m => m.ExamQuestions)
+   
+        @foreach (var question in Model.ExamQuestions)
+        {
+            if (question.QuestionType.ID == ViewBag.mcq)
+            {
+                <div class="form-group mb-4">
+                    <label class="form-control">@question.QuestionBodyText</label>
+                    @foreach (var anwer in question.QuestionAnswers)
+                    {
+
+                        <div class="form-check ">
+                            @if (anwer.IsCorrect)
+                            {
+                                <input name="@(question.ID)" type="radio" value="@(anwer.ID)" onclick="">
+                            }
+                            <input name="@(question.ID)" type="radio" value="@(anwer.ID)">
+                            <label class="form-check-label">
+                                @anwer.AnswerBodyText
+                            </label>
+                        </div>
+
+                    }
+                </div>
+
+            }
+
+
+            if (question.QuestionType.ID == ViewBag.yseOrNO)
+            {
+                <div class="form-group mb-4">
+                    <label class="form-control">@question.QuestionBodyText</label>
+                    @foreach (var anwer in question.QuestionAnswers)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" name="@(question.ID)" type="radio" value="@(anwer.ID)">
+                            <label class="form-check-label">
+                                @anwer.AnswerBodyText
+                            </label>
+                        </div>
+                    }
+                </div>
+
+            }
+
+
+
+            if (question.QuestionType.ID == ViewBag.multi)
+            {
+                <div class="form-group mb-4">
+                    <label class="form-control">@question.QuestionBodyText</label>
+                    @foreach (var anwer in question.QuestionAnswers)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" value="@anwer.ID" type="checkbox" name="@(question.ID)">
+                            <label class="form-check-label">
+                                @anwer.AnswerBodyText
+                            </label>
+                        </div>
+
+
+                    }
+                </div>
+
+            }
+
+
+        }
+
+
+
+
+        <button type="submit" class="btn btn-info btn-block mt-3"> submit </button>
+    </form>
+</div>
+
+@section Scripts{
+
+
+
+}
+
+

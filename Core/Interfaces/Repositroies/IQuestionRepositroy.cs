@@ -12,5 +12,6 @@ namespace Core.Interfaces.Repositroies
     public interface IQuestionRepositroy : IRepositroy<Question>
     {
         IQueryable<Question> GetAllQuestionWithType();
+        Question GetQuestionWithAnswer(int id);
     }
 }
