@@ -27,11 +27,21 @@ namespace AppServices
         {
             _unitOfWork.Dispose();
         }
+
+        /// <summary>
+        /// get all candidates 
+        /// </summary>
+        /// <returns> list of candiates </returns>
         public List<GetCandidateModel> GetAllCandidate()
         {
             return _mapper.Map<List<GetCandidateModel>>(_unitOfWork.CandidateRepositroy.GetAll());
         }
 
+        /// <summary>
+        /// get a candidate by id
+        /// </summary>
+        /// <param name="candidateId"></param>
+        /// <returns> candidate </returns>
         public GetCandiateWithPositionsModel GetCandidate(int candidateId)
         {
             var candiate = _unitOfWork.CandidateRepositroy.GetCandidatWithPosition(candidateId);
@@ -45,6 +55,11 @@ namespace AppServices
             return candiateModel;
         }
 
+        /// <summary>
+        /// create new candidate  
+        /// </summary>
+        /// <param name="candidateModel"></param>
+        /// <returns> the created candidate </returns>
         public GetCandidateModel CreateNewCandidate(CreateCandidateModel candidateModel)
         {
             var PositionId = candidateModel.PositionId;
@@ -62,6 +77,11 @@ namespace AppServices
             return null;
         }
 
+        /// <summary>
+        /// update candidate 
+        /// </summary>
+        /// <param name="candidateModel"></param>
+        /// <returns>bool</returns>
         public bool UpdateCandidate(UpdateCandidateModel candidateModel)
         {
 
@@ -76,6 +96,11 @@ namespace AppServices
             return false;
         }
 
+        /// <summary>
+        /// delete candidate
+        /// </summary>
+        /// <param name="candidate"></param>
+        /// <returns>bool</returns>
         public bool DeleteCandidate(int candidate)
         {
             _unitOfWork.CandidateRepositroy.Delete(candidate);
@@ -85,6 +110,11 @@ namespace AppServices
             return false;
         }
 
+        /// <summary>
+        /// asign candidate to position
+        /// </summary>
+        /// <param name="candidateId"></param>
+        /// <param name="jobPositionId"></param>
         public void AddCandidateToPosition(int candidateId, int jobPositionId)
         {
             var candidatePosition = new CandidatePosition()
@@ -94,7 +124,11 @@ namespace AppServices
             _unitOfWork.SaveChanges();
 
         }
-
+        /// <summary>
+        /// start the candidate exam
+        /// </summary>
+        /// <param name="candidateId"></param>
+        /// <returns> exam model</returns>
         public ExamModel StartCandidateExam(int candidateId)
         {
             var exam = new InterviewExam() { CreatedDateTime = DateTime.Now, CandidateId = candidateId };
@@ -113,7 +147,12 @@ namespace AppServices
 
             return null;
         }
-
+        /// <summary>
+        /// genrate questions related to candidate position
+        /// for exam
+        /// </summary>
+        /// <param name="candidateId"></param>
+        /// <returns> list of questions </returns>
         private List<GetQuestionWithAnswersModel> GenrateAllQuestionForCandidatePosition(int candidateId)
         {
             List<Question> questions = new List<Question>();
@@ -129,7 +168,11 @@ namespace AppServices
             return _mapper.Map<List<GetQuestionWithAnswersModel>>(questions);
 
         }
-
+        /// <summary>
+        /// select exam question randomly
+        /// </summary>
+        /// <param name="allQuestions"></param>
+        /// <returns> list of questions</returns>
         private List<GetQuestionWithAnswersModel> SelectQuestionsRandomlyForExam(List<GetQuestionWithAnswersModel> allQuestions)
         {
             Random random = new Random();
@@ -149,7 +192,11 @@ namespace AppServices
 
             return questions;
         }
-
+        /// <summary>
+        /// submit candidate question 
+        /// </summary>
+        /// <param name="examModel"></param>
+        /// <returns> result model</returns>
         public ResultModel SubmitExam(ExamModel examModel)
         {
             double score = CalcluateScore(examModel);
@@ -169,8 +216,11 @@ namespace AppServices
 
         }
 
-
-
+        /// <summary>
+        /// calcluate exam score
+        /// </summary>
+        /// <param name="examModel"></param>
+        /// <returns> score </returns>
         private double CalcluateScore(ExamModel examModel)
         {
             double score = 0;
@@ -185,7 +235,7 @@ namespace AppServices
                         if (question.CandidateSelectedAnswer != 0 && question.CandidateSelectedAnswer == answer.ID)
                         {
                             if (answer.IsCorrect)
-                                score +=questionDegree;
+                                score += questionDegree;
                         }
                     }
                 }

@@ -22,6 +22,14 @@ namespace Infrastructure.Persistence.Configurations
             builder.HasOne(pq => pq.Question)
                 .WithMany(q => q.PositionQuestions)
                 .HasForeignKey(pq => pq.OuestionId);
+
+            builder.HasData(new PositionQuestion()
+            {
+                ID = 1,
+                JobPositionId = 1,
+                OuestionId = 1
+            }
+       );
         }
     }
 }

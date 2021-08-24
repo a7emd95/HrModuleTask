@@ -25,6 +25,24 @@ namespace Infrastructure.Persistence.Configurations
             builder.HasOne(qa => qa.Question)
                 .WithMany(q => q.QuestionAnswers)
                 .HasForeignKey(qa => qa.QuestionId);
+
+            builder.HasData(new QuestionAnswer()
+            {
+                ID = 1,
+                AnswerBodyText = "Yes",
+                IsCorrect = true,
+                QuestionId = 1
+            },
+            new QuestionAnswer()
+            {
+                ID = 2,
+                AnswerBodyText = "No",
+                IsCorrect = false,
+                QuestionId = 1
+            }
+
+       );
+
         }
     }
 }

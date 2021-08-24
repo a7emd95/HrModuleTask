@@ -25,6 +25,14 @@ namespace Infrastructure.Persistence.Configurations
             builder.HasOne(q => q.QuestionType)
                 .WithMany(qt => qt.Questions)
                 .HasForeignKey(q => q.QuestionTypeId);
+
+            builder.HasData(new Question()
+            {
+                ID = 1,
+                QuestionBodyText = "is C# porgramming language",
+                QuestionTypeId = 2
+            }
+       );
         }
     }
 }

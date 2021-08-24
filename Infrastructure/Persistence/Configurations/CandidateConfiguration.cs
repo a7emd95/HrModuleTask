@@ -22,7 +22,13 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(c => c.Email)
                 .IsRequired();
 
-
+            builder.HasData(new Candidate()
+            {
+                ID = 1,
+                Name = "ahmed",
+                Email = "ahmed@gmail.com"
+            }
+            );
 
         }
     }

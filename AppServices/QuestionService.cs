@@ -5,11 +5,7 @@ using Core.Interfaces.Base;
 using Core.Models.Question;
 using Core.Models.QuestionAnswer;
 using Core.Models.QuestuinType;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppServices
 {
@@ -42,17 +38,17 @@ namespace AppServices
         /// Get question
         /// </summary>
         /// <param name="questionId"></param>
-        /// <returns></returns>
+        /// <returns>question</returns>
         public GetQuestionModel GetQuestion(int questionId)
         {
             return _mapper.Map<GetQuestionModel>(_unitOfWork.QuestionRepositroy.GetById(questionId));
         }
 
         /// <summary>
-        /// 
+        /// to create new question
         /// </summary>
         /// <param name="questionModel"></param>
-        /// <returns></returns>
+        /// <returns> created question </returns>
         public GetQuestionModel CreateNewQuestion(CreateQuestionModel questionModel)
         {
             var newQuestion = _mapper.Map<Question>(questionModel);
@@ -95,12 +91,21 @@ namespace AppServices
         {
             return _mapper.Map<List<GetQuestionTypeModel>>(_unitOfWork.QuestionTypeRepositroy.GetAll());
         }
-
+        /// <summary>
+        /// get a question by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns> question </returns>
         public GetQuestionTypeModel GetQuestionTypeByID(int id)
         {
             return _mapper.Map<GetQuestionTypeModel>(_unitOfWork.QuestionTypeRepositroy.GetById(id));
         }
 
+        /// <summary>
+        /// add answet to question
+        /// </summary>
+        /// <param name="answerModel"></param>
+        /// <returns>created answer</returns>
         public GetQuestionAnswerModel AddAnswerToQuestion(CreateQuestionAnswerModel answerModel)
         {
             var answer = _mapper.Map<QuestionAnswer>(answerModel);
@@ -113,6 +118,10 @@ namespace AppServices
 
         }
 
+        /// <summary>
+        /// get all questions with their type
+        /// </summary>
+        /// <returns> list of questions with their type </returns>
         public List<GetQuestionWithTypeModel> GetAllQuestionWithType()
         {
             return _mapper.Map<List<GetQuestionWithTypeModel>>(_unitOfWork.QuestionRepositroy.GetAllQuestionWithType());

@@ -18,12 +18,19 @@ namespace Infrastructure.Persistence.Configurations
             builder.Property(jp => jp.PublicID)
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("NEWID()");
-                                    
+
 
             builder.Property(jp => jp.Title)
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.HasData(new JobPosition()
+            {
+                ID = 1,
+                Title = "softwear developer",
+                IsActive = true
+            }
+       );
         }
     }
 }
