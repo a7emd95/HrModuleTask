@@ -110,7 +110,7 @@ namespace Infrastructure.Base
         }
 
         private CandidateAnswerRepositroy candidateAnswerRepo;
-        public ICandidateAnswerRepository ICandidateAnswerRepository
+        public ICandidateAnswerRepository CandidateAnswerRepository
         {
             get
             {

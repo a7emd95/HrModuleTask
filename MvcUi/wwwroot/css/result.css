@@ -1,0 +1,15 @@
+﻿body {
+    background-color: rgb(238, 240, 242)
+}
+
+.card {
+    border-radius: 3px;
+    overflow: hidden;
+}
+.card-header {
+background-color : white ;
+}
+
+.btn {
+border-radius : 0px ;
+}

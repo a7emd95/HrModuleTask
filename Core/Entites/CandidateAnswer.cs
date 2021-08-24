@@ -10,7 +10,7 @@ namespace Core.Entites
     {
         public int ID { get; set; }
         public Guid PublicId { get; set; }
-        public string AnswerBodyText { get; set; }
+        public int? AnswerId { get; set; }
         public bool? IsCorrect { get; set; }
 
         public int InterviewExamId { get; set; }

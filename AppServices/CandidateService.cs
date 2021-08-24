@@ -150,13 +150,85 @@ namespace AppServices
             List<int> numbers = new List<int>();
             for (int i = 0; i < numberOfQuestin; i++)
             {
-               
-               // questions.Add(allQuestions[random.Next(allQuestions.Count)]);
+
+                // questions.Add(allQuestions[random.Next(allQuestions.Count)]);
                 questions.Add(allQuestions[i]);
             }
+
 
             return questions;
         }
 
+        public ResultModel SubmitExam(ExamModel examModel)
+        {
+            double score = CalcluateScore(examModel);
+
+            foreach (var item in examModel.ExamQuestions)
+            {
+                var candidatAnswer = new CandidateAnswer { InterviewExamId = examModel.InterViewExamId, QuestionId = item.ID };
+                _unitOfWork.CandidateAnswerRepository.Insert(candidatAnswer);
+            }
+            var interviewExam = _unitOfWork.InterviewExamRepository.GetById(examModel.InterViewExamId);
+            interviewExam.SubmissionDateTime = DateTime.Now;
+            interviewExam.Score = score;
+            _unitOfWork.InterviewExamRepository.Update(interviewExam);
+            _unitOfWork.SaveChanges();
+
+            return new ResultModel { Score = (int)score };
+
+        }
+
+
+
+        private double CalcluateScore(ExamModel examModel)
+        {
+            double score = 0;
+            int questionDegree = 100 / examModel.NumberOfOuestion;
+
+            foreach (var question in examModel.ExamQuestions)
+            {
+                if (question.QuestionTypeId == (int)QuestionTypeEnum.mcq || question.QuestionTypeId == (int)QuestionTypeEnum.yseOrNO)
+                {
+                    foreach (var answer in question.QuestionAnswers)
+                    {
+                        if (question.CandidateSelectedAnswer != 0 && question.CandidateSelectedAnswer == answer.ID)
+                        {
+                            if (answer.IsCorrect)
+                                score +=questionDegree;
+                        }
+                    }
+                }
+
+                if (question.QuestionTypeId == (int)QuestionTypeEnum.multi)
+                {
+                    bool isCandidateAnswerCoreect = true;
+                    foreach (var answer in question.QuestionAnswers)
+                    {
+
+                        if (answer.IsSlected == true && answer.IsCorrect == false || answer.IsSlected == false && answer.IsCorrect == true)
+                        {
+
+                            isCandidateAnswerCoreect = false;
+                        }
+
+                    }
+                    if (isCandidateAnswerCoreect)
+                        score += questionDegree;
+                    else
+                        score += 0;
+                }
+            }
+            return score;
+        }
+
+
+
+    }
+
+    enum QuestionTypeEnum
+    {
+        mcq = 1,
+        yseOrNO = 2,
+        multi = 3
     }
 }

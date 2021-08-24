@@ -2,6 +2,7 @@
 using Core.Models.Candidate;
 using Core.Models.InterviewExam;
 using Microsoft.AspNetCore.Mvc;
+using MvcUi.Mappers;
 using MvcUi.Models;
 using System;
 using System.Collections.Generic;
@@ -79,24 +80,34 @@ namespace MvcUi.Controllers
         }
 
 
-        
+        [Route("interview/candidate/exam")]
         public IActionResult StartExam(int id)
         {
-            //TODO : Map to viewModel
+
             SetQuestionTypeValues();
 
             var model = _candidateAppService.AssignCandidateToExam(id);
-            return View(model);
+            var viewModel = Mapper.MapToExamViewModel(model);
+            return View(viewModel);
         }
 
         [HttpPost]
+        [Route("interview/candidate/exam")]
         public IActionResult StartExam(CandidateExamAnswersViewModel examAnswers)
         {
             SetQuestionTypeValues();
+            var model = Mapper.MapToExamModel(examAnswers);
+            var resultModel = _candidateAppService.SubmitExam(model);
 
-            return View();
+            return RedirectToAction("Result", new { Score = resultModel.Score });
         }
 
+        [Route("interview/candidate/result")]
+        public IActionResult Result(ResultModel model)
+        {
+            return View(model);
+
+        }
         private void SetQuestionTypeValues()
         {
             ViewBag.mcq = 1;
