@@ -4,7 +4,7 @@
 ### add migration 
 ### update database
 
-#Technonlogies 
+# Technonlogies 
 ### Asp.Net5 Mvc
 ### MS server
 ### Entity Framework core 
