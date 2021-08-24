@@ -9,9 +9,9 @@ namespace Core.Models.QuestionAnswer
     public class GetQuestionAnswerModel
     {
         public int ID { get; set; }
-        public Guid PublicId { get; set; }
         public string AnswerBodyText { get; set; }
         public bool IsCorrect { get; set; }
         public int QuestionId { get; set; }
+        public  bool IsSlected { get; set; }
     }
 }

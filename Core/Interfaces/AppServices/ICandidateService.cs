@@ -19,6 +19,7 @@ namespace Core.Interfaces.AppServices
         bool DeleteCandidate(int candidate);
 
         void AddCandidateToPosition(int candidateId, int jobPositionId);
-        ExamModel AssignCandidateToExam(int candidateId); 
+        ExamModel AssignCandidateToExam(int candidateId);
+        ResultModel SubmitExam(ExamModel examModel);
     }
 }

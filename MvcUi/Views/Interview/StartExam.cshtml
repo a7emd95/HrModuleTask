@@ -1,4 +1,4 @@
-﻿@model Core.Models.InterviewExam.ExamModel
+﻿@model MvcUi.Models.ExamViewModel
 
 @{
     ViewData["Title"] = "StartExam";
@@ -7,14 +7,14 @@
 <div class="container-fluid">
     <h1>Exam</h1>
     <hr />
-    <div class="font-weight-bold h6">@Model.Candidate.Positions[0].Title</div>
-    <div class="font-weight-bold">Candidate Name: <span class="text-info  font-italic">@Model.Candidate.Name</span></div>
+    <div class="font-weight-bold h6">@Model.CandidatePosition</div>
+    <div class="font-weight-bold">Candidate Name: <span class="text-info  font-italic">@Model.CandidateName</span></div>
     <hr />
 
     <form method="post" asp-antiforgery="true">
 
         <input asp-for="InterViewExamId" name="InterViewExamId" value="@Model.InterViewExamId" hidden />
-        <input asp-for="Candidate" name="Candidate" value="@Model.Candidate" hidden />
+        <input asp-for="NumberOfOuestion" name="NumberOfOuestion" value="@Model.NumberOfOuestion" hidden />
 
         @for (int i = 0; i < Model.ExamQuestions.Count; i++)
         {
@@ -22,14 +22,17 @@
             {
                 <div class="form-group mb-4">
                     @Html.HiddenFor(m => m.ExamQuestions[i].ID)
+                    @Html.HiddenFor(m => m.ExamQuestions[i].QuestionTypeId)
                     @Html.DisplayFor(m => m.ExamQuestions[i].QuestionBodyText, new { @class = "h4" })
 
-                    @foreach (var answer in Model.ExamQuestions[i].QuestionAnswers)
+                    @for (int j = 0; j < Model.ExamQuestions[i].QuestionAnswers.Count; j++)
                     {
-                        <div class="form-check ">
-                            @Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateAnswersId, answer.ID, new { id = answer.ID })
-                            <label class="form-check-label" for="@answer.ID">@answer.AnswerBodyText</label>
-                        </div>
+                    <div class="form-check">
+                        @Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateSelectedAnswer, Model.ExamQuestions[i].QuestionAnswers[j].ID, new { id = Model.ExamQuestions[i].QuestionAnswers[j].ID })
+                        @Html.HiddenFor(m => m.ExamQuestions[i].QuestionAnswers[j].IsCorrect)
+                        @Html.HiddenFor(m => m.ExamQuestions[i].QuestionAnswers[j].ID)
+                        <label class="form-check-label" for="@(Model.ExamQuestions[i].QuestionAnswers[j].ID)">@(Model.ExamQuestions[i].QuestionAnswers[j].AnswerBodyText)</label>
+                    </div>                        
                     }
                 </div>
             }
@@ -38,14 +41,17 @@
             {
                 <div class="form-group mb-4">
                     @Html.HiddenFor(m => m.ExamQuestions[i].ID)
+                    @Html.HiddenFor(m => m.ExamQuestions[i].QuestionTypeId)
                     @Html.DisplayFor(m => m.ExamQuestions[i].QuestionBodyText, new { @class = "h4" })
 
-                    @foreach (var answer in Model.ExamQuestions[i].QuestionAnswers)
+                    @for (int j = 0; j < Model.ExamQuestions[i].QuestionAnswers.Count; j++)
                     {
-                        <div class="form-check">
-                            @Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateAnswersId, answer.ID, new { id = answer.ID })
-                            <label class="form-check-label" for="@answer.ID">@answer.AnswerBodyText</label>
-                        </div>
+                    <div class="form-check">
+                        @Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateSelectedAnswer, Model.ExamQuestions[i].QuestionAnswers[j].ID, new { id = Model.ExamQuestions[i].QuestionAnswers[j].ID })
+                        @Html.HiddenFor(m => m.ExamQuestions[i].QuestionAnswers[j].IsCorrect)
+                        @Html.HiddenFor(m => m.ExamQuestions[i].QuestionAnswers[j].ID)
+                        <label class="form-check-label" for="@(Model.ExamQuestions[i].QuestionAnswers[j].ID)">@(Model.ExamQuestions[i].QuestionAnswers[j].AnswerBodyText)</label>
+                    </div>
                     }
                 </div>
             }
@@ -54,14 +60,18 @@
             {
                 <div class="form-group mb-4">
                     @Html.HiddenFor(m => m.ExamQuestions[i].ID)
+                    @Html.HiddenFor(m => m.ExamQuestions[i].QuestionTypeId)
                     @Html.DisplayFor(m => m.ExamQuestions[i].QuestionBodyText, new { @class = "h4" })
-                    @foreach (var answer in Model.ExamQuestions[i].QuestionAnswers)
+                    @for (int j = 0; j < Model.ExamQuestions[i].QuestionAnswers.Count; j++)
                     {
-                        <div class="form-check">
-                            @Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateAnswersId, answer.ID, new { id = answer.ID })
-                            @*@Html.CheckBoxFor(m => m.ExamQuestions[i].CandidateAnswersId, answer.ID, new { id = answer.ID })*@
-                            <label class="form-check-label" for="@answer.ID">@answer.AnswerBodyText</label>
-                        </div>
+                    <div class="form-check">
+                        @*@Html.RadioButtonFor(m => m.ExamQuestions[i].CandidateSelectedAnswer, answer.ID, new { id = answer.ID })*@
+
+                        @Html.CheckBoxFor(m => m.ExamQuestions[i].QuestionAnswers[j].IsSlected, Model.ExamQuestions[i].QuestionAnswers[j].ID)
+                        @Html.HiddenFor(m => m.ExamQuestions[i].QuestionAnswers[j].ID)
+                        @Html.HiddenFor(m => m.ExamQuestions[i].QuestionAnswers[j].IsCorrect)
+                        <label class="form-check-label" for="@(Model.ExamQuestions[i].QuestionAnswers[j].ID)">@(Model.ExamQuestions[i].QuestionAnswers[j].AnswerBodyText)</label>
+                    </div>
                     }
                 </div>
             }

@@ -16,7 +16,7 @@ namespace Core.Interfaces.Base
         IQuestionRepositroy QuestionRepositroy{ get; }
         IPositionQuestionRepository PositionQuestionRepository { get; }
         IInterviewExamRepository  InterviewExamRepository { get; }
-        ICandidateAnswerRepository ICandidateAnswerRepository  { get; }
+        ICandidateAnswerRepository CandidateAnswerRepository  { get; }
         IQuestionAnswerRepository QuestionAnswerRepository { get; }
         IQuestionTypeRepositroy QuestionTypeRepositroy{ get; }
 

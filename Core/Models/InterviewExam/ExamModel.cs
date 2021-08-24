@@ -16,15 +16,12 @@ namespace Core.Models.InterviewExam
         public GetCandiateWithPositionsModel Candidate { get; set; }
         public List<GetQuestionWithAnswersModel> ExamQuestions { get; set; }
 
+       
         public int NumberOfOuestion
         {
             get => ExamQuestions.Count;
         }
 
-        //public float QuestionDegree
-        //{
-        //   //get => 100 / ExamQuestions.Count;
-        //}
         public ExamModel()
         {
             ExamQuestions = new List<GetQuestionWithAnswersModel>();
