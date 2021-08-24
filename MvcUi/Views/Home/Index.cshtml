@@ -3,5 +3,13 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome To The HR System</h1> 
+    <h1 class="display-4">Welcome To The HR System</h1>
+    <hr />
+    <h3>To start the candidate exam, please go to the <a asp-controller="Interview" asp-action="GetAllCandidates" >candidate list </a> and starts the exam, and before that, please do the below steps </h3>
+
 </div>
+<ul>
+    <li><a asp-controller="Admin" asp-action="GetAllPosition">create a position</a></li>
+    <li><a asp-controller="Interview" asp-action="GetAllCandidates">create a candidate and assign him to a position</a></li>
+    <li><a asp-controller="Admin" asp-action="GetAllQuestuion">create questions and assign to positions</a></li>
+</ul>

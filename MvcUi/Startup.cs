@@ -11,6 +11,7 @@ using FluentValidation.AspNetCore;
 using Infrastructure.Base;
 using Infrastructure.Persistence;
 using Infrastructure.Persistence.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -60,6 +61,15 @@ namespace MvcUi
 
             //setUp AutoMapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            //setUp Authantication 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(
+                options =>
+                {
+                    options.LoginPath = "/account/login";
+                }
+                );
 
 
             services.AddControllersWithViews().AddFluentValidation();
