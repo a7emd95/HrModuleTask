@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Entites;
+using Core.Enum;
 using Core.Interfaces.AppServices;
 using Core.Interfaces.Base;
 using Core.Models.Candidate;
@@ -8,9 +9,6 @@ using Core.Models.JobPosition;
 using Core.Models.Question;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AppServices
 {
@@ -29,7 +27,6 @@ namespace AppServices
         {
             _unitOfWork.Dispose();
         }
-
         public List<GetCandidateModel> GetAllCandidate()
         {
             return _mapper.Map<List<GetCandidateModel>>(_unitOfWork.CandidateRepositroy.GetAll());
@@ -44,8 +41,6 @@ namespace AppServices
             {
                 candiateModel.Positions
                     .Add(_mapper.Map<GetJobPositionModel>(_unitOfWork.JobPositionRepositroy.GetById(position.JobPositionId)));
-
-
             }
             return candiateModel;
         }
@@ -64,12 +59,9 @@ namespace AppServices
                 _unitOfWork.SaveChanges();
                 return _mapper.Map<GetCandidateModel>(insertedCandidate);
             }
-
             return null;
         }
 
-
-        //TODO : Make Update With Position
         public bool UpdateCandidate(UpdateCandidateModel candidateModel)
         {
 
@@ -81,7 +73,6 @@ namespace AppServices
 
                 return true;
             }
-
             return false;
         }
 
@@ -104,7 +95,7 @@ namespace AppServices
 
         }
 
-        public ExamModel AssignCandidateToExam(int candidateId)
+        public ExamModel StartCandidateExam(int candidateId)
         {
             var exam = new InterviewExam() { CreatedDateTime = DateTime.Now, CandidateId = candidateId };
             var candidate = GetCandidate(candidateId);
@@ -204,14 +195,13 @@ namespace AppServices
                     bool isCandidateAnswerCoreect = true;
                     foreach (var answer in question.QuestionAnswers)
                     {
-
-                        if (answer.IsSlected == true && answer.IsCorrect == false || answer.IsSlected == false && answer.IsCorrect == true)
+                        if ((answer.IsSlected && answer.IsCorrect == false) ||
+                            (answer.IsSlected == false && answer.IsCorrect))
                         {
-
                             isCandidateAnswerCoreect = false;
                         }
-
                     }
+
                     if (isCandidateAnswerCoreect)
                         score += questionDegree;
                     else
@@ -220,15 +210,5 @@ namespace AppServices
             }
             return score;
         }
-
-
-
-    }
-
-    enum QuestionTypeEnum
-    {
-        mcq = 1,
-        yseOrNO = 2,
-        multi = 3
     }
 }

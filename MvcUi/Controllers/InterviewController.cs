@@ -1,13 +1,11 @@
-﻿using Core.Interfaces.AppServices;
+﻿using Core.Enum;
+using Core.Interfaces.AppServices;
 using Core.Models.Candidate;
 using Core.Models.InterviewExam;
 using Microsoft.AspNetCore.Mvc;
 using MvcUi.Mappers;
 using MvcUi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MvcUi.Controllers
 {
@@ -22,13 +20,16 @@ namespace MvcUi.Controllers
             return View();
         }
 
-        public InterviewController(ICandidateService candidateAppService,
-            IJobPostionService jobPostionAppService, IQuestionService questionAppService)
+        public InterviewController(
+            ICandidateService candidateAppService,
+            IJobPostionService jobPostionAppService,
+            IQuestionService questionAppService)
         {
             _candidateAppService = candidateAppService;
             _jobPostionAppService = jobPostionAppService;
             _questionAppService = questionAppService;
         }
+
         [Route("interview/candidate/create")]
         public IActionResult CreateCandidate()
         {
@@ -86,7 +87,7 @@ namespace MvcUi.Controllers
 
             SetQuestionTypeValues();
 
-            var model = _candidateAppService.AssignCandidateToExam(id);
+            var model = _candidateAppService.StartCandidateExam(id);
             var viewModel = Mapper.MapToExamViewModel(model);
             return View(viewModel);
         }
@@ -110,9 +111,9 @@ namespace MvcUi.Controllers
         }
         private void SetQuestionTypeValues()
         {
-            ViewBag.mcq = 1;
-            ViewBag.yseOrNO = 2;
-            ViewBag.multi = 3;
+            ViewBag.mcq = (int) QuestionTypeEnum.mcq;
+            ViewBag.yseOrNO = (int) QuestionTypeEnum.yseOrNO;
+            ViewBag.multi = (int)QuestionTypeEnum.multi;
         }
 
     }
