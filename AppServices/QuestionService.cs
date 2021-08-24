@@ -63,6 +63,11 @@ namespace AppServices
             return null;
         }
 
+        /// <summary>
+        /// update question
+        /// </summary>
+        /// <param name="questionModel"></param>
+        /// <returns> return updated question</returns>
         public bool UpdateQuestion(UpdateQuestionModel questionModel)
         {
             var question = _mapper.Map<Question>(questionModel);
